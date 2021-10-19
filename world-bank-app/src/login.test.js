@@ -23,10 +23,10 @@ describe("createAccount form", () => {
         render(<Login />)
         expect(screen.getByTestId("submitLogin")).toBeInTheDocument()
     })
-    test("Form has option to switch to createAccount form", () => {
-        render(<Login />)
-        expect(screen.getByTestId("createAccountForm")).toBeInTheDocument()
-    })
+    // test("Form has option to switch to createAccount form", () => {
+    //     render(<Login />)
+    //     expect(screen.getByTestId("createAccountForm")).toBeInTheDocument()
+    // })
     // test("Submitting form with no password creates error message", async () => {
     //     await act(async () => {
     //         render(<CreateAccount />)

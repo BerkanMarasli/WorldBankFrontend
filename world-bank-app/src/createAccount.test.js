@@ -96,9 +96,7 @@ describe("createAccount form", () => {
             await userEvent.type(screen.getByTestId("createUsername"), "b")
             await userEvent.click(screen.getByTestId("submitCreateAccount"))
         })
-        // expect(screen.getByTestId("createUsername")).toHaveValue(
-        //     "bbbbbbbbbbbbbbbbbbbbbbbb"
-        // )
+
         expect(screen.getByTestId("emailError")).toBeInTheDocument()
     })
     test("The user is reminded that his passwords must match", async () => {
