@@ -1,94 +1,137 @@
-import { useFormik } from "formik";
-
-const validate = (values) => {
-  const errors = {};
-  if (!values.password) {
-    errors.password = "Password is required";
-  } else if (values.password.length > 15) {
-    errors.password = "Must be 15 characters or less";
-  }
-  return errors;
-};
+import { useFormik } from "formik"
+import * as Yup from "yup"
 
 function CreateAccount() {
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
-    validate,
-    onSubmit: (values) => {
-      //put salt hasher here
-      alert(
-        "You have submitted the following values: " + JSON.stringify(values)
-      );
-    },
-  });
+    const formik = useFormik({
+        initialValues: {
+            email: "",
+            password: "",
+            confirmPassword: "",
+        },
+        validationSchema: Yup.object({
+            password: Yup.string()
+                .min(8, "Must be at least 8 characters")
+                .max(20, "Must be 20 characters or less")
+                .required("Required"),
+            confirmPassword: Yup.string()
+                .oneOf([Yup.ref("password"), null], "Passwords must match")
+                .required("Required"),
+            email: Yup.string()
+                .max(35, "Cannot exceed 35 characters")
+                .email("Invalid email address")
+                .required("Required"),
+        }),
+        onSubmit: (values) => {
+            //Endpoint fetching will be put here
+            alert(
+                "You have submitted the following values: " +
+                    JSON.stringify(values)
+            )
+        },
+    })
 
-  return (
-    <div>
-      <form
-        data-testid="createAccountForm"
-        class="w-50 p-3 offset-md-3"
-        onSubmit={formik.handleSubmit}
-      >
-        <h3>Welcome to World Bank Database.</h3>
-        <p>Please create an account below: </p>
-        <div class="form-group">
-          <label htmlFor="email"></label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            data-testid="createUsername"
-            placeholder="email"
-            class="form-control"
-            onChange={formik.handleChange}
-            value={formik.values.email}
-          />
-          {formik.errors.email ? <div>{formik.errors.email}</div> : null}
-          <div class="invalid-feedback"> Invalid username. </div>
-        </div>
-        <div class="form-group">
-          <div class="row">
-            <div class="col">
-              <input
-                type="text"
-                name="username"
-                data-testid="createPassword"
-                placeholder="password"
-                class="form-control"
-              />
-              {formik.errors.password ? (
-                <div data-test-id="requirePassword">
-                  {formik.errors.password}
+    return (
+        <div className="text-center">
+            <form
+                data-testid="createAccountForm"
+                className="w-50 p-3 offset-md-3"
+                onSubmit={formik.handleSubmit}>
+                <h3>Welcome to World Bank Database.</h3>
+                <p>Please create an account below: </p>
+                <div class="form-group">
+                    <label htmlFor="email"></label>
+                    <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        data-testid="createUsername"
+                        placeholder="email"
+                        className={validationCSS(
+                            formik.touched.email,
+                            formik.errors.email
+                        )}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.email}
+                    />
+                    {formik.touched.email && formik.errors.email ? (
+                        <div data-testid="emailError">
+                            {formik.errors.email}
+                        </div>
+                    ) : null}
                 </div>
-              ) : null}
-            </div>
+                <div className="form-group">
+                    <div className="row">
+                        <div className="col">
+                            <div className="form-group">
+                                <input
+                                    id="password"
+                                    name="password"
+                                    type="password"
+                                    data-testid="createPassword"
+                                    placeholder="password"
+                                    class={validationCSS(
+                                        formik.touched.password,
+                                        formik.errors.password
+                                    )}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    value={formik.values.password}
+                                />
+                                {formik.touched.password &&
+                                formik.errors.password ? (
+                                    <div data-testid="requirePassword">
+                                        {formik.errors.password}
+                                    </div>
+                                ) : null}
+                            </div>
+                        </div>
 
-            <div class="col">
-              <div class="form-group">
-                <input
-                  type="text"
-                  name="username"
-                  data-testid="confirmPassword"
-                  placeholder="confirm password"
-                  class="form-control is-valid"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+                        <div className="col">
+                            <div className="form-group">
+                                <input
+                                    id="confirmPassword"
+                                    name="confirmPassword"
+                                    type="password"
+                                    data-testid="confirmPassword"
+                                    placeholder="confirm password"
+                                    class={validationCSS(
+                                        formik.touched.confirmPassword,
+                                        formik.errors.confirmPassword
+                                    )}
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    value={formik.values.confirmPassword}
+                                />
+                                {formik.touched.confirmPassword &&
+                                formik.errors.confirmPassword ? (
+                                    <div data-testid="requireConfirmPassword">
+                                        {formik.errors.confirmPassword}
+                                    </div>
+                                ) : null}
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="form-group">
-          <button type="submit" data-testid="submitButton">
-            Create Account
-          </button>
+                <div className="form-group">
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                        data-testid="submitCreateAccount">
+                        Create Account
+                    </button>
+                </div>
+            </form>
         </div>
-      </form>
-    </div>
-  );
+    )
 }
 
-export default CreateAccount;
+export default CreateAccount
+
+function validationCSS(userHasVisited, errorStatus) {
+    if (userHasVisited && !errorStatus) return "form-control is-valid"
+    if (userHasVisited && errorStatus) return "form-control is-invalid"
+
+    return "form-control"
+}
