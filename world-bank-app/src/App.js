@@ -18,9 +18,9 @@ function App() {
                 class="w-25"
                 alt="worldBankLogo"
             />
-            <CreateAccount />
+            {/* <CreateAccount /> */}
             {/* <Login /> */}
-            <MainSearch />
+            {/* <MainSearch /> */}
         </div>
     )
 }
