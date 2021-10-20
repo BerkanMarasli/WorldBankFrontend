@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { act } from "react-dom/test-utils"
-import CreateAccount from "./createAccount"
+import CreateAccount from "./CreateAccount"
 
 describe("createAccount form", () => {
     test("Component gets rendered", () => {
