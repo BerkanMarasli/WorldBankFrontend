@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event"
 import { act } from "react-dom/test-utils"
 import Login from "./Login"
 
-describe("createAccount form", () => {
+describe("Login form", () => {
     test("Component gets rendered", () => {
         render(<Login />)
     })
