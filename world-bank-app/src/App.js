@@ -1,6 +1,7 @@
 import "./App.css"
 import CreateAccount from "./createAccount"
 import Login from "./login"
+import MainSearch from "./MainSearch"
 
 function App() {
     return (
@@ -18,7 +19,8 @@ function App() {
                 alt="worldBankLogo"
             />
             {/* <CreateAccount /> */}
-            <Login />
+            {/* <Login /> */}
+            {/* <MainSearch /> */}
         </div>
     )
 }
