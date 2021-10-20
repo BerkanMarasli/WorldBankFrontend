@@ -2,10 +2,11 @@ import "./App.css"
 import CreateAccount from "./createAccount"
 import Login from "./login"
 import MainSearch from "./MainSearch"
+import Graph from "./Graph"
 
 function App() {
     return (
-        <div className="text-center">
+        <div className="text-center d-flex flex-column align-items-center">
             <head>
                 <link
                     rel="stylesheet"
@@ -21,6 +22,7 @@ function App() {
             {/* <CreateAccount /> */}
             {/* <Login /> */}
             {/* <MainSearch /> */}
+            <Graph />
         </div>
     )
 }
