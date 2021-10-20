@@ -1,5 +1,6 @@
 import { useFormik } from "formik"
 import * as Yup from "yup"
+import { useState } from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
 
 import Button from "react-bootstrap/Button"
@@ -9,6 +10,7 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 
 function CreateAccount() {
+    const [serverResponseMessage, setServerResponseMessage] = useState("")
     const formik = useFormik({
         initialValues: {
             email: "",
@@ -28,12 +30,12 @@ function CreateAccount() {
                 .email("Invalid email address")
                 .required("Required"),
         }),
-        onSubmit: (values) => {
-            //Endpoint fetching will be put here
-            alert(
-                "You have submitted the following values: " +
-                    JSON.stringify(values)
-            )
+        onSubmit: async (values) => {
+            const result = await sendUserDetailsToServer(values)
+            result === "Success"
+                ? setServerResponseMessage("Success")
+                : setServerResponseMessage("Failure")
+            //Redirect to search page
         },
     })
 
@@ -64,7 +66,9 @@ function CreateAccount() {
                             value={formik.values.email}
                         />
                         {formik.touched.email && formik.errors.email ? (
-                            <div data-testid="emailError">
+                            <div
+                                className="invalid-feedback"
+                                data-testid="emailError">
                                 {formik.errors.email}
                             </div>
                         ) : null}
@@ -89,7 +93,9 @@ function CreateAccount() {
                             />
                             {formik.touched.password &&
                             formik.errors.password ? (
-                                <div data-testid="requirePassword">
+                                <div
+                                    className="invalid-feedback"
+                                    data-testid="requirePassword">
                                     {formik.errors.password}
                                 </div>
                             ) : null}
@@ -113,7 +119,9 @@ function CreateAccount() {
                             />
                             {formik.touched.confirmPassword &&
                             formik.errors.confirmPassword ? (
-                                <div data-testid="requireConfirmPassword">
+                                <div
+                                    className="invalid-feedback"
+                                    data-testid="requireConfirmPassword">
                                     {formik.errors.confirmPassword}
                                 </div>
                             ) : null}
@@ -128,11 +136,25 @@ function CreateAccount() {
                     Create Account
                 </Button>
             </Form>
+            {serverResponseMessage === "Success" ? (
+                <div data-testid="redirectMessage">
+                    Success. Redirecting....
+                </div>
+            ) : serverResponseMessage === "Failure" ? (
+                <div data-testid="redirectMessage">
+                    <p>
+                        Sorry, there may already be an account under that name.
+                        Alternatively, we're having trouble accessing our server
+                        at the moment.
+                    </p>
+                    <p>Please wait a few moments and try again.</p>
+                </div>
+            ) : (
+                ""
+            )}
         </div>
     )
 }
-
-export default CreateAccount
 
 function validationCSS(userHasVisited, errorStatus) {
     if (userHasVisited && !errorStatus) return "form-control is-valid"
@@ -140,3 +162,28 @@ function validationCSS(userHasVisited, errorStatus) {
 
     return "form-control"
 }
+
+async function sendUserDetailsToServer(values) {
+    //Localhost may need to be updated when we start hosting the server
+    let result = ""
+    const submitToServer = await fetch("http://localhost:8080/signup", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+    })
+        .then(async (response) => {
+            result = await response.json()
+            if (result.name === "error") result = "Error"
+            else result = "Success"
+        })
+        .catch((error) => {
+            console.log("Error:", error)
+            result = "error"
+        })
+
+    return result
+}
+
+export default CreateAccount

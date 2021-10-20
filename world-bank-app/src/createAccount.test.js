@@ -40,8 +40,9 @@ describe("createAccount form", () => {
             await userEvent.type(screen.getByTestId("createUsername"), "b")
             await userEvent.type(screen.getByTestId("createUsername"), "b")
             await userEvent.type(screen.getByTestId("createUsername"), "b")
+            await userEvent.click(screen.getByTestId("submitCreateAccount"))
         })
-        expect(screen.getByTestId("createUsername")).toHaveValue("bbb")
+        expect(screen.getByTestId("emailError")).toBeInTheDocument()
     })
     test("Emails cannot exceed 20 characters", async () => {
         await act(async () => {
@@ -115,6 +116,41 @@ describe("createAccount form", () => {
             await userEvent.click(screen.getByTestId("submitCreateAccount"))
         })
         expect(screen.getByTestId("requirePassword")).toBeInTheDocument()
+    })
+    test("Filling in form and clicking 'Create Account' submits the data", async () => {
+        await act(async () => {
+            render(<CreateAccount />)
+
+            await userEvent.type(screen.getByTestId("createUsername"), "b")
+            await userEvent.type(screen.getByTestId("createUsername"), "@")
+            await userEvent.type(screen.getByTestId("createUsername"), "b")
+            await userEvent.type(screen.getByTestId("createUsername"), ".")
+            await userEvent.type(screen.getByTestId("createUsername"), "b")
+
+            await userEvent.type(screen.getByTestId("createPassword"), "b")
+            await userEvent.type(screen.getByTestId("createPassword"), "b")
+            await userEvent.type(screen.getByTestId("createPassword"), "b")
+            await userEvent.type(screen.getByTestId("createPassword"), "b")
+            await userEvent.type(screen.getByTestId("createPassword"), "b")
+            await userEvent.type(screen.getByTestId("createPassword"), "b")
+            await userEvent.type(screen.getByTestId("createPassword"), "b")
+            await userEvent.type(screen.getByTestId("createPassword"), "b")
+
+            await userEvent.type(screen.getByTestId("confirmPassword"), "b")
+            await userEvent.type(screen.getByTestId("confirmPassword"), "b")
+            await userEvent.type(screen.getByTestId("confirmPassword"), "b")
+            await userEvent.type(screen.getByTestId("confirmPassword"), "b")
+            await userEvent.type(screen.getByTestId("confirmPassword"), "b")
+            await userEvent.type(screen.getByTestId("confirmPassword"), "b")
+            await userEvent.type(screen.getByTestId("confirmPassword"), "b")
+            await userEvent.type(screen.getByTestId("confirmPassword"), "b")
+        })
+
+        await userEvent.click(screen.getByTestId("submitCreateAccount"))
+
+        await waitFor(() => {
+            expect(screen.getByTestId("redirectMessage")).toBeInTheDocument()
+        })
     })
 
     //Add tests for endpoint :)

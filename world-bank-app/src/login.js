@@ -1,7 +1,7 @@
 import { useFormik } from "formik"
-import validationCSS from "./createAccount"
-import "bootstrap/dist/css/bootstrap.min.css"
 import * as Yup from "yup"
+import "bootstrap/dist/css/bootstrap.min.css"
+import { useState } from "react"
 
 import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
@@ -9,6 +9,7 @@ import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 
 function Login() {
+    const [serverResponseMessage, setServerResponseMessage] = useState("")
     const formik = useFormik({
         initialValues: {
             email: "",
@@ -25,12 +26,29 @@ function Login() {
                 .email("Invalid email address")
                 .required("Required"),
         }),
-        onSubmit: (values) => {
-            //Endpoint fetching will be put here
-            alert(
-                "You have submitted the following values: " +
-                    JSON.stringify(values)
-            )
+        onSubmit: async (values) => {
+            const result = await sendUserDetailsToServer(values)
+            result === "Success"
+                ? setServerResponseMessage("Success")
+                : setServerResponseMessage("Failure")
+            //Redirect to search page
+            //Localhost may need to be updated if we start hosting a server.
+            // const submitToServer = await fetch("http://localhost:8080/login", {
+            //     method: "POST",
+            //     header: {
+            //         "Content-Type": "application/json",
+            //     },
+            //     body: JSON.stringify(values),
+            // })
+
+            // const response = await submitToServer.json()
+
+            // console.log("Our world bank server says....")
+            // console.log(response)
+            // alert(
+            //     "You have submitted the following values: " +
+            //         JSON.stringify(values)
+            // )
         },
     })
 
@@ -45,6 +63,7 @@ function Login() {
 
                 <Row className="mb-3">
                     <Form.Group>
+                        <Form.Label>Email</Form.Label>
                         <Form.Control
                             id="email"
                             name="email"
@@ -58,37 +77,44 @@ function Login() {
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             value={formik.values.email}
-                            required
+                            //required
                         />
                         {formik.touched.email && formik.errors.email ? (
-                            <div data-testid="emailError">
+                            <div
+                                className="invalid-feedback"
+                                data-testid="emailError">
                                 {formik.errors.email}
                             </div>
                         ) : null}
                     </Form.Group>
                 </Row>
                 <Row className="mb-3">
-                    <Form.Group>
-                        <Form.Control
-                            id="password"
-                            name="password"
-                            type="password"
-                            data-testid="enterPassword"
-                            placeholder="password"
-                            class={validationCSS(
-                                formik.touched.password,
-                                formik.errors.password
-                            )}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.password}
-                        />
-                        {formik.touched.password && formik.errors.password ? (
-                            <div data-testid="requirePassword">
-                                {formik.errors.password}
-                            </div>
-                        ) : null}
-                    </Form.Group>
+                    <Col>
+                        <Form.Group>
+                            <Form.Control
+                                id="password"
+                                name="password"
+                                type="password"
+                                data-testid="enterPassword"
+                                placeholder="password"
+                                class={validationCSS(
+                                    formik.touched.password,
+                                    formik.errors.password
+                                )}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.password}
+                            />
+                            {formik.touched.password &&
+                            formik.errors.password ? (
+                                <div
+                                    className="invalid-feedback"
+                                    data-testid="requirePassword">
+                                    {formik.errors.password}
+                                </div>
+                            ) : null}
+                        </Form.Group>
+                    </Col>
                 </Row>
                 <Button
                     variant="primary"
@@ -99,11 +125,60 @@ function Login() {
                 </Button>
             </Form>
 
-            <div data-testid="createAccountForm">
-                Don't have an account? Create an account here.
-            </div>
+            {serverResponseMessage === "Success" ? (
+                <div data-testid="redirectMessage">
+                    Success. Redirecting....
+                </div>
+            ) : serverResponseMessage === "Failure" ? (
+                <div data-testid="redirectMessage">
+                    <p>
+                        Sorry, there may already be an account under that name.
+                        Alternatively, we're having trouble accessing our server
+                        at the moment.
+                    </p>
+                    <p>Please wait a few moments and try again.</p>
+                </div>
+            ) : (
+                <div data-testid="createAccountForm">
+                    Don't have an account? Create an account here.
+                </div>
+            )}
         </div>
     )
+}
+
+//NOTE: I know this function could just be imported from ""./createAccount", but for whatever reason
+//the css breaks if you import this function instead of just copy + pasting it here. - Sean
+function validationCSS(userHasVisited, errorStatus) {
+    if (userHasVisited && !errorStatus) return "form-control is-valid"
+    if (userHasVisited && errorStatus) return "form-control is-invalid"
+
+    return "form-control"
+}
+
+async function sendUserDetailsToServer(values) {
+    //Localhost may need to be updated when we start hosting the server
+    console.log("submitting....")
+    let result = ""
+    const submitToServer = await fetch("http://localhost:8080/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+    })
+        .then(async (response) => {
+            result = await response.json()
+            if (result.name === "error") result = "Error"
+            else result = "Success"
+        })
+        .catch((error) => {
+            console.log("Error:", error)
+            result = "error"
+        })
+    console.log("result is...")
+    console.log(result)
+    return result
 }
 
 export default Login
