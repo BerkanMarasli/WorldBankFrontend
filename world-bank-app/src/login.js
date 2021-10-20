@@ -32,23 +32,6 @@ function Login() {
                 ? setServerResponseMessage("Success")
                 : setServerResponseMessage("Failure")
             //Redirect to search page
-            //Localhost may need to be updated if we start hosting a server.
-            // const submitToServer = await fetch("http://localhost:8080/login", {
-            //     method: "POST",
-            //     header: {
-            //         "Content-Type": "application/json",
-            //     },
-            //     body: JSON.stringify(values),
-            // })
-
-            // const response = await submitToServer.json()
-
-            // console.log("Our world bank server says....")
-            // console.log(response)
-            // alert(
-            //     "You have submitted the following values: " +
-            //         JSON.stringify(values)
-            // )
         },
     })
 
@@ -131,12 +114,11 @@ function Login() {
                 </div>
             ) : serverResponseMessage === "Failure" ? (
                 <div data-testid="redirectMessage">
-                    <p>
-                        Sorry, there may already be an account under that name.
-                        Alternatively, we're having trouble accessing our server
-                        at the moment.
+                    <p data-testid="accountNotFound">
+                        Sorry, we couldn't find an account with those login
+                        details.
                     </p>
-                    <p>Please wait a few moments and try again.</p>
+                    <p>Why not create a new account?</p>
                 </div>
             ) : (
                 <div data-testid="createAccountForm">
@@ -160,6 +142,9 @@ async function sendUserDetailsToServer(values) {
     //Localhost may need to be updated when we start hosting the server
     console.log("submitting....")
     let result = ""
+
+    console.log("You are sending...")
+    console.log(JSON.stringify(values))
     const submitToServer = await fetch("http://localhost:8080/login", {
         method: "POST",
         headers: {
@@ -169,7 +154,9 @@ async function sendUserDetailsToServer(values) {
     })
         .then(async (response) => {
             result = await response.json()
-            if (result.name === "error") result = "Error"
+            console.log("response is....")
+            console.log(result)
+            if (result.error) result = "Error"
             else result = "Success"
         })
         .catch((error) => {
