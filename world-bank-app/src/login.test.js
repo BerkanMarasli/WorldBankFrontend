@@ -29,29 +29,30 @@ describe("createAccount form", () => {
     // })
     test("Submitting form with no password creates error message", async () => {
         await act(async () => {
-            render(<CreateAccount />)
+            render(<Login />)
             await userEvent.click(screen.getByTestId("submitLogin"))
         })
         expect(screen.getByTestId("requirePassword")).toBeInTheDocument()
     })
-    // test("The following is an invalid email address: 'bbb' ", async () => {
-    //     await act(async () => {
-    //         render(<CreateAccount />)
-    //         await userEvent.type(screen.getByTestId("createUsername"), "b")
-    //         await userEvent.type(screen.getByTestId("createUsername"), "b")
-    //         await userEvent.type(screen.getByTestId("createUsername"), "b")
-    //     })
-    //     expect(screen.getByTestId("createUsername")).toHaveValue("bbb")
-    // })
+    test("The following is an invalid email address: 'bbb' ", async () => {
+        await act(async () => {
+            render(<Login />)
+            await userEvent.type(screen.getByTestId("enterEmail"), "b")
+            await userEvent.type(screen.getByTestId("enterEmail"), "b")
+            await userEvent.type(screen.getByTestId("enterEmail"), "b")
+            await userEvent.click(screen.getByTestId("submitLogin"))
+        })
+        expect(screen.getByTestId("emailError")).toBeInTheDocument()
+    })
 
-    // test("Passwords less than 8 characters are rejected", async () => {
-    //     await act(async () => {
-    //         render(<CreateAccount />)
-    //         await userEvent.type(screen.getByTestId("createPassword"), "b")
-    //         await userEvent.click(screen.getByTestId("submitCreateAccount"))
-    //     })
-    //     expect(screen.getByTestId("requirePassword")).toBeInTheDocument()
-    // })
+    test("Passwords less than 8 characters are rejected", async () => {
+        await act(async () => {
+            render(<Login />)
+            await userEvent.type(screen.getByTestId("enterPassword"), "b")
+            await userEvent.click(screen.getByTestId("submitLogin"))
+        })
+        expect(screen.getByTestId("requirePassword")).toBeInTheDocument()
+    })
 
-    //Add tests for endpoint :)
+    //Add tests for endpoint :) and for switching to createAccount form :)
 })
