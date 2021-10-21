@@ -26,6 +26,25 @@ describe("Login form", () => {
     // test("Form has option to switch to createAccount form", () => {
     //     render(<Login />)
     //     expect(screen.getByTestId("createAccountForm")).toBeInTheDocument()
+<<<<<<< HEAD
+=======
+    // })
+    // test("Submitting form with no password creates error message", async () => {
+    //     await act(async () => {
+    //         render(<CreateAccount />)
+    //         await userEvent.click(screen.getByTestId("submitCreateAccount"))
+    //     })
+    //     expect(screen.getByTestId("requirePassword")).toBeInTheDocument()
+    // })
+    // test("The following is an invalid email address: 'bbb' ", async () => {
+    //     await act(async () => {
+    //         render(<CreateAccount />)
+    //         await userEvent.type(screen.getByTestId("createUsername"), "b")
+    //         await userEvent.type(screen.getByTestId("createUsername"), "b")
+    //         await userEvent.type(screen.getByTestId("createUsername"), "b")
+    //     })
+    //     expect(screen.getByTestId("createUsername")).toHaveValue("bbb")
+>>>>>>> 7d9ce23d6b84ee87c85df24fd6329b28be26ffd6
     // })
     test("Submitting form with no password creates error message", async () => {
         await act(async () => {
