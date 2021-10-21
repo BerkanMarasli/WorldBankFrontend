@@ -21,8 +21,8 @@ function App() {
             />
             {/* <CreateAccount /> */}
             {/* <Login /> */}
-            {/* <MainSearch /> */}
-            <Graph />
+            <MainSearch />
+            {/* <Graph /> */}
         </div>
     )
 }
