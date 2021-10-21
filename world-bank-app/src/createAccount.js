@@ -1,9 +1,6 @@
 import { useFormik } from "formik"
 import * as Yup from "yup"
-<<<<<<< HEAD
 import { useState } from "react"
-=======
->>>>>>> 7d9ce23d6b84ee87c85df24fd6329b28be26ffd6
 import "bootstrap/dist/css/bootstrap.min.css"
 
 import { Button, Form, Row, Col, Alert } from "react-bootstrap"
@@ -60,13 +57,9 @@ function CreateAccount() {
                             value={formik.values.email}
                         />
                         {formik.touched.email && formik.errors.email ? (
-<<<<<<< HEAD
                             <div
                                 className="invalid-feedback"
                                 data-testid="emailError">
-=======
-                            <div data-testid="emailError">
->>>>>>> 7d9ce23d6b84ee87c85df24fd6329b28be26ffd6
                                 {formik.errors.email}
                             </div>
                         ) : null}
@@ -91,13 +84,9 @@ function CreateAccount() {
                             />
                             {formik.touched.password &&
                             formik.errors.password ? (
-<<<<<<< HEAD
                                 <div
                                     className="invalid-feedback"
                                     data-testid="requirePassword">
-=======
-                                <div data-testid="requirePassword">
->>>>>>> 7d9ce23d6b84ee87c85df24fd6329b28be26ffd6
                                     {formik.errors.password}
                                 </div>
                             ) : null}
@@ -121,20 +110,15 @@ function CreateAccount() {
                             />
                             {formik.touched.confirmPassword &&
                             formik.errors.confirmPassword ? (
-<<<<<<< HEAD
                                 <div
                                     className="invalid-feedback"
                                     data-testid="requireConfirmPassword">
-=======
-                                <div data-testid="requireConfirmPassword">
->>>>>>> 7d9ce23d6b84ee87c85df24fd6329b28be26ffd6
                                     {formik.errors.confirmPassword}
                                 </div>
                             ) : null}
                         </Form.Group>
                     </Col>
                 </Row>
-<<<<<<< HEAD
                 <div className="d-grid">
                     <Button
                         className="mb-3"
@@ -161,35 +145,6 @@ function CreateAccount() {
                     ) : null}
                 </div>
             </Form>
-=======
-                <Button
-                    variant="primary"
-                    type="submit"
-                    data-testid="submitCreateAccount"
-                    size="lg">
-                    Create Account
-                </Button>
-            </Form>
-<<<<<<< HEAD
-            {serverResponseMessage === "Success" ? (
-                <div data-testid="redirectMessage">
-                    Success. Redirecting....
-                </div>
-            ) : serverResponseMessage === "Failure" ? (
-                <div data-testid="redirectMessage">
-                    <p>
-                        Sorry, there may already be an account under that name.
-                        Alternatively, we're having trouble accessing our server
-                        at the moment.
-                    </p>
-                    <p>Please wait a few moments and try again.</p>
-                </div>
-            ) : (
-                ""
-            )}
-=======
->>>>>>> 7d9ce23d6b84ee87c85df24fd6329b28be26ffd6
->>>>>>> main
         </div>
     )
 }
