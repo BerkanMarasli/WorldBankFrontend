@@ -13,6 +13,7 @@ import {
 
 function Graph(props) {
     const [data, setData] = useState(props.data)
+    const indicatorName = data[0].indicatorname
 
     return (
         <div className="Graph-container d-flex align-items-center">
@@ -27,7 +28,6 @@ function Graph(props) {
                         left: 50,
                         bottom: 25,
                     }}>
-                    {/* <CartesianGrid strokeDasharray="1 1" /> */}
                     <XAxis dataKey="year">
                         <Label value="Year" position="bottom" />
                     </XAxis>
@@ -45,7 +45,7 @@ function Graph(props) {
                     <Line
                         type="monotone"
                         dataKey="value"
-                        name={"INSERT INDICATOR NAME"}
+                        name={indicatorName}
                         stroke="#FF0000"
                         activeDot={{ r: 4 }}
                     />

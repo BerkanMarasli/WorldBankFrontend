@@ -2,6 +2,7 @@ import MainSearchCountrySelection from "./MainSearchCountrySelection"
 import MainSearchIndicatorSelection from "./MainSearchIndicatorSelection"
 import MainSearchYearSelection from "./MainSearchYearSelection"
 import MainSearchButton from "./MainSearchButton"
+import Results from "./Results"
 import { useState, useEffect } from "react"
 const axios = require("axios")
 
@@ -19,6 +20,9 @@ function MainSearch() {
     const [indicatorSelection, setIndicatorSelection] = useState(null)
     const [topYearSelection, setTopYearSelection] = useState(null)
     const [bottomYearSelection, setBottomYearSelection] = useState(null)
+    //
+    const [countryOnlyData, setCountryOnlyData] = useState(null)
+    //
     useEffect(() => {
         fetchCountries(setCountries)
         fetchIndicators(setIndicators)
@@ -79,7 +83,9 @@ function MainSearch() {
                     topYearSelection: topYearSelection,
                     bottomYearSelection: bottomYearSelection,
                 }}
+                setData={{ setCountryOnlyData: setCountryOnlyData }}
             />
+            {countryOnlyData ? <Results data={{countryOnlyData}} /> : null}
         </div>
     )
 }

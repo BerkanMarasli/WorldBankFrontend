@@ -12,7 +12,7 @@ function MainSearchIndicatorSelection(props) {
                 {indicatorNames.map((indicator) => {
                     return (
                         <option
-                            value={`${indicator.indicatorname}`}>{`${indicator.indicatorname}`}</option>
+                            value={`${indicator.indicatorcode}`}>{`${indicator.indicatorname}`}</option>
                     )
                 })}
             </Form.Control>
