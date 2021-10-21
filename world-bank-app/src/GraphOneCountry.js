@@ -1,18 +1,8 @@
 import "./Graph.css"
-import { useState, useEffect } from "react"
-import {
-    LineChart,
-    Line,
-    XAxis,
-    YAxis,
-    Label,
-    Tooltip,
-    Legend,
-    ResponsiveContainer,
-} from "recharts"
+import { LineChart, Line, XAxis, YAxis, Label, Tooltip, Legend, ResponsiveContainer } from "recharts"
 
 function GraphOneCountry(props) {
-    const [data, setData] = useState(props.data)
+    const data = props.data
     const indicatorName = data[0].indicatorname
     const countryName = data[0].countryname
 
@@ -32,24 +22,10 @@ function GraphOneCountry(props) {
                     <XAxis dataKey="year">
                         <Label value="Year" position="bottom" />
                     </XAxis>
-                    <YAxis
-                        type="number"
-                        domain={["dataMin", "dataMax"]}
-                        width={80}
-                    />
+                    {/* <YAxis type="number" domain={["dataMin", "dataMax"]} width={80} /> */}
                     <Tooltip />
-                    <Legend
-                        layout="horizontal"
-                        align="right"
-                        verticalAlign="top"
-                    />
-                    <Line
-                        type="monotone"
-                        dataKey="value"
-                        name={`${countryName} - ${indicatorName}`}
-                        stroke="#FF0000"
-                        activeDot={{ r: 4 }}
-                    />
+                    <Legend wrapperStyle={{ top: 0, left: 25, marginTop: "20px" }} layout="horizontal" align="center" verticalAlign="top" />
+                    <Line type="monotone" dataKey="value" name={`${countryName} - ${indicatorName}`} stroke="#FF0000" activeDot={{ r: 4 }} />
                 </LineChart>
             </ResponsiveContainer>
         </div>

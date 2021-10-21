@@ -1,4 +1,3 @@
-import GraphOneCountry from "./GraphOneCountry"
 import GraphTwoCountries from "./GraphTwoCountries"
 import Button from "react-bootstrap/Button"
 
@@ -8,7 +7,7 @@ function Results(props) {
     const numberOfDataPointsCountry1 = country1Data.length
     const numberOfDataPointsCountry2 = country2Data.length
     return (
-        <div>
+        <div className="d-flex flex-column align-items-center">
             {(numberOfDataPointsCountry1 > 1 && numberOfDataPointsCountry2) > 1 ? (
                 <GraphTwoCountries data={{ country1Data: country1Data, country2Data: country2Data }}></GraphTwoCountries>
             ) : numberOfDataPointsCountry1 === 1 && numberOfDataPointsCountry2 === 1 ? (
@@ -19,7 +18,12 @@ function Results(props) {
             ) : (
                 <p>No Information Available For Search</p>
             )}
-            <Button variant="primary" type="submit" size="m" onClick={() => handleBackClick(setCountry1Data, setCountry2Data, setDisplayMainSearch)}>
+            <Button
+                className="mt-4 mb-4"
+                variant="primary"
+                type="submit"
+                size="m"
+                onClick={() => handleBackClick(setCountry1Data, setCountry2Data, setDisplayMainSearch)}>
                 Back to Search
             </Button>
         </div>

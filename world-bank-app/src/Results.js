@@ -6,7 +6,7 @@ function Results(props) {
     const { setDisplayMainSearch } = props.display
     const numberOfDataPoints = graphData.length
     return (
-        <div>
+        <div className="d-flex flex-column align-items-center">
             {numberOfDataPoints > 1 ? (
                 <GraphOneCountry data={graphData}></GraphOneCountry>
             ) : numberOfDataPoints === 1 ? (
@@ -17,7 +17,12 @@ function Results(props) {
             ) : (
                 <p>No Information Available For Search</p>
             )}
-            <Button variant="primary" type="submit" size="m" onClick={() => handleBackClick(setGraphData, setDisplayMainSearch)}>
+            <Button
+                className="mt-4 mb-4"
+                variant="primary"
+                type="submit"
+                size="m"
+                onClick={() => handleBackClick(setGraphData, setDisplayMainSearch)}>
                 Back to Search
             </Button>
         </div>

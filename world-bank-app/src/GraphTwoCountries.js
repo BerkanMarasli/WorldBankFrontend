@@ -26,9 +26,9 @@ function GraphTwoCountries(props) {
                     <XAxis dataKey="year">
                         <Label value="Year" position="bottom" />
                     </XAxis>
-                    <YAxis type="number" domain={["dataMin", "dataMax"]} width={80} />
+                    {/* <YAxis type="number" domain={["dataMin", "dataMax"]} width={80} /> */}
                     <Tooltip />
-                    <Legend layout="horizontal" align="right" verticalAlign="top" />
+                    <Legend wrapperStyle={{ top: 0, left: 25, marginTop: "20px" }} layout="horizontal" align="center" verticalAlign="top" />
                     <Line
                         type="monotone"
                         dataKey="country1Value"
