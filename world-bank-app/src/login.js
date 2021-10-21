@@ -1,4 +1,5 @@
 import { useFormik } from "formik"
+import validationCSS from "./createAccount"
 import * as Yup from "yup"
 import { useState } from "react"
 import { Button, Form, Row, Col, Alert } from "react-bootstrap"
@@ -14,12 +15,13 @@ function Login() {
             password: Yup.string()
                 .min(8, "Must be at least 8 characters")
                 .max(20, "Must be 20 characters or less")
-                .required("Required"),
-
+                .required("Required")
+                .label("password"),
             email: Yup.string()
                 .max(35, "Cannot exceed 35 characters")
                 .email("Invalid email address")
-                .required("Required"),
+                .required("Required")
+                .label("email"),
         }),
         onSubmit: async (values) => {
             const result = await sendUserDetailsToServer(values)
@@ -50,7 +52,7 @@ function Login() {
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             value={formik.values.email}
-                            //required
+                            required
                         />
                         {formik.touched.email && formik.errors.email ? (
                             <div
@@ -62,6 +64,7 @@ function Login() {
                     </Form.Group>
                 </Row>
                 <Row className="mb-3">
+<<<<<<< HEAD
                     <Col>
                         <Form.Group>
                             <Form.Control
@@ -109,6 +112,44 @@ function Login() {
                     ) : null}
                 </div>
             </Form>
+=======
+                    <Form.Group>
+                        <Form.Control
+                            id="password"
+                            name="password"
+                            type="password"
+                            data-testid="enterPassword"
+                            placeholder="password"
+                            class={validationCSS(
+                                formik.touched.password,
+                                formik.errors.password
+                            )}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.password}
+                        />
+                        {formik.touched.password && formik.errors.password ? (
+                            <div
+                                className="invalid-feedback"
+                                data-testid="requirePassword">
+                                {formik.errors.password}
+                            </div>
+                        ) : null}
+                    </Form.Group>
+                </Row>
+                <Button
+                    variant="primary"
+                    type="submit"
+                    data-testid="submitLogin"
+                    size="lg">
+                    Create Account
+                </Button>
+            </Form>
+
+            <div data-testid="createAccountForm">
+                Don't have an account? Create an account here.
+            </div>
+>>>>>>> main
         </div>
     )
 }
