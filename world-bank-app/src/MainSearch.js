@@ -3,6 +3,7 @@ import MainSearchIndicatorSelection from "./MainSearchIndicatorSelection"
 import MainSearchYearSelection from "./MainSearchYearSelection"
 import MainSearchButton from "./MainSearchButton"
 import Results from "./Results"
+import ResultsTwoCountries from "./ResultsTwoCountries"
 import { useState, useEffect } from "react"
 const axios = require("axios")
 
@@ -21,7 +22,12 @@ function MainSearch() {
     const [topYearSelection, setTopYearSelection] = useState(null)
     const [bottomYearSelection, setBottomYearSelection] = useState(null)
     //
+    const [numberOfCountriesCompared, setNumberOfCountriesCompared] = useState(1)
     const [graphData, setGraphData] = useState(null)
+    const [country1Data, setCountry1Data] = useState(null)
+    const [country2Data, setCountry2Data] = useState(null)
+    //
+    const [displayMainSearch, setDisplayMainSearch] = useState("block")
     //
     useEffect(() => {
         fetchCountries(setCountries)
@@ -31,7 +37,7 @@ function MainSearch() {
 
     return (
         <div>
-            <div>
+            <div style={{ display: displayMainSearch }}>
                 {countries ? (
                     <MainSearchCountrySelection
                         data={countries}
@@ -84,10 +90,33 @@ function MainSearch() {
                         topYearSelection: topYearSelection,
                         bottomYearSelection: bottomYearSelection,
                     }}
-                    setData={{ setGraphData: setGraphData }}
+                    setData={{
+                        setGraphData: setGraphData,
+                        setNumberOfCountriesCompared: setNumberOfCountriesCompared,
+                        setCountry1Data: setCountry1Data,
+                        setCountry2Data: setCountry2Data,
+                    }}
+                    display={{ setDisplayMainSearch: setDisplayMainSearch }}
                 />
             </div>
-            <div>{graphData ? <Results data={{ graphData }} /> : null}</div>
+            <div>
+                {graphData && numberOfCountriesCompared === 1 ? (
+                    <Results data={{ graphData: graphData, setGraphData: setGraphData }} display={{ setDisplayMainSearch: setDisplayMainSearch }} />
+                ) : null}
+                {country1Data && country2Data && numberOfCountriesCompared === 2 ? (
+                    <ResultsTwoCountries
+                        data={{
+                            country1Data: country1Data,
+                            setCountry1Data: setCountry1Data,
+                            country2Data: country2Data,
+                            setCountry2Data: setCountry2Data,
+                        }}
+                        display={{ setDisplayMainSearch: setDisplayMainSearch }}
+                    />
+                ) : (
+                    <h2>yo</h2>
+                )}
+            </div>
         </div>
     )
 }

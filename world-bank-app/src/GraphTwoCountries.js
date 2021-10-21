@@ -1,44 +1,14 @@
 import "./Graph.css"
-import { useState, useEffect } from "react"
-import {
-    LineChart,
-    Line,
-    XAxis,
-    YAxis,
-    Label,
-    CartesianGrid,
-    Tooltip,
-    Legend,
-    ResponsiveContainer,
-} from "recharts"
-const axios = require("axios")
+import { LineChart, Line, XAxis, YAxis, Label, Tooltip, Legend, ResponsiveContainer } from "recharts"
 
 function GraphTwoCountries(props) {
-    const [data, setData] = useState(null)
-    const [data2, setData2] = useState(null)
-    const mainData = []
-    if (data && data2) {
-        console.log("data2", data2)
-        data.forEach((dataPoint) => {
-            console.log("dataPoint", dataPoint)
-            const c2Obj = data2.find((c2) => {
-                if (c2.year === dataPoint.year) return c2
-            })
-            console.log("c2Obj", c2Obj)
-            console.log(c2Obj.value)
-            mainData.push({
-                year: dataPoint.year,
-                value1: dataPoint.value,
-                value2: c2Obj.value,
-            })
-        })
-    }
-    console.log(mainData)
-    const [compareCountries, setCompareCountries] = useState(false)
-    useEffect(() => {
-        fetchDummyData(setData)
-        fetchDummyData2(setData2, setCompareCountries)
-    }, [])
+    const country1Data = props.data.country1Data
+    const country2Data = props.data.country2Data
+    const combinedData = combineCountryData(country1Data, country2Data)
+    const country1Name = country1Data[0].countryname
+    const country2Name = country2Data[0].countryname
+    const indicator1Name = country1Data[0].indicatorname
+    const indicator2Name = country2Data[0].indicatorname
 
     return (
         <div className="Graph-container d-flex align-items-center">
@@ -46,66 +16,54 @@ function GraphTwoCountries(props) {
                 <LineChart
                     width={300}
                     height={300}
-                    data={mainData}
+                    data={combinedData}
                     margin={{
                         top: 25,
                         right: 50,
                         left: 50,
                         bottom: 25,
                     }}>
-                    {/* <CartesianGrid strokeDasharray="1 1" /> */}
                     <XAxis dataKey="year">
                         <Label value="Year" position="bottom" />
                     </XAxis>
-                    <YAxis
-                        type="number"
-                        domain={["dataMin", "dataMax"]}
-                        width={80}
-                    />
+                    <YAxis type="number" domain={["dataMin", "dataMax"]} width={80} />
                     <Tooltip />
-                    <Legend
-                        layout="horizontal"
-                        align="right"
-                        verticalAlign="top"
-                    />
+                    <Legend layout="horizontal" align="right" verticalAlign="top" />
                     <Line
                         type="monotone"
-                        dataKey="value1"
-                        name={"INSERT INDICATOR NAME"}
+                        dataKey="country1Value"
+                        name={`${country1Name} - ${indicator1Name}`}
                         stroke="#FF0000"
                         activeDot={{ r: 4 }}
                     />
-                    {compareCountries ? (
-                        <Line
-                            type="monotone"
-                            dataKey="value2"
-                            name={"INSERT INDICATOR NAME"}
-                            stroke="#0000FF"
-                            activeDot={{ r: 4 }}
-                        />
-                    ) : null}
+                    <Line
+                        type="monotone"
+                        dataKey="country2Value"
+                        name={`${country2Name} - ${indicator2Name}`}
+                        stroke="#0000FF"
+                        activeDot={{ r: 4 }}
+                    />
                 </LineChart>
             </ResponsiveContainer>
         </div>
     )
 }
 
-async function fetchDummyData(setData) {
-    const response = await axios.get(
-        "http://localhost:8080/search/GBR/EN_ATM_CO2E_KT"
-    )
-    const data = await response.data
-    setData(data)
-}
-
-async function fetchDummyData2(setData2, setCompareCountries) {
-    const response = await axios.get(
-        "http://localhost:8080/search/FRA/EN_ATM_CO2E_KT"
-    )
-    const data = await response.data
-    console.log(data)
-    setData2(data)
-    setCompareCountries(true)
+function combineCountryData(country1Data, country2Data) {
+    const combinedData = []
+    country1Data.forEach((country1DataPoint) => {
+        const country2Obj = country2Data.find((country2DataPoint) => {
+            if (country2DataPoint.year === country1DataPoint.year) {
+                return country2DataPoint
+            }
+        })
+        combinedData.push({
+            year: country1DataPoint.year,
+            country1Value: country1DataPoint.value,
+            country2Value: country2Obj.value,
+        })
+    })
+    return combinedData
 }
 
 export default GraphTwoCountries
