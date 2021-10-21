@@ -105,6 +105,6 @@ describe("Login form", () => {
             expect(screen.getByTestId("accountNotFound")).toBeInTheDocument()
         })
 
-        //Add tests for endpoint :) and for switching to createAccount form :)
+        //Add tests for switching to createAccount form :)
     })
 })
