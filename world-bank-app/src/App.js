@@ -1,27 +1,21 @@
 import "./App.css"
-import CreateAccount from "./CreateAccount"
-import Login from "./Login"
-import MainSearch from "./MainSearch"
-
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import LandingPage from "./LandingPage"
 
 function App() {
-    return (
-        <Router>
-            <div className="text-center">
-                <img
-                    src="https://www.bellanaija.com/wp-content/uploads/2015/08/World-Bank-logo.jpg"
-                    class="w-25"
-                    alt="worldBankLogo"
-                />
-                <Switch>
-                    <Route exact path="/" component={Login} />
-                    <Route path="/createAccount" component={CreateAccount} />
-                    <Route path="/mainSearch" component={MainSearch} />
-                </Switch>
-            </div>
-        </Router>
-    )
+    return <LandingPage />
 }
+/* <Navbar bg="transparent">
+    <Container>
+        <Navbar.Brand href="/">
+            <img
+                src={Logo}
+                width="250"
+                className="d-inline-block align-top"
+                alt="World Bank logo"
+            />
+        </Navbar.Brand>
+        <Button variant="outline-secondary">Logout</Button>
+    </Container>
+</Navbar> */
 
 export default App

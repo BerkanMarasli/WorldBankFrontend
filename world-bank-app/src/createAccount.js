@@ -3,11 +3,7 @@ import * as Yup from "yup"
 import { useState } from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
 
-import Button from "react-bootstrap/Button"
-import Form from "react-bootstrap/Form"
-import Container from "react-bootstrap/Container"
-import Row from "react-bootstrap/Row"
-import Col from "react-bootstrap/Col"
+import { Button, Form, Row, Col, Alert } from "react-bootstrap"
 
 function CreateAccount() {
     const [serverResponseMessage, setServerResponseMessage] = useState("")
@@ -40,17 +36,12 @@ function CreateAccount() {
     })
 
     return (
-        <div className="text-center">
+        <div className="d-flex justify-content-center">
             <Form
                 data-testid="createAccountForm"
-                className="w-50 p-3 offset-md-3"
                 onSubmit={formik.handleSubmit}>
-                <h3>Welcome to World Bank Database.</h3>
-                <p>Please create an account below: </p>
-
                 <Row className="mb-3">
                     <Form.Group>
-                        <Form.Label>Email</Form.Label>
                         <Form.Control
                             id="email"
                             name="email"
@@ -128,30 +119,32 @@ function CreateAccount() {
                         </Form.Group>
                     </Col>
                 </Row>
-                <Button
-                    variant="primary"
-                    type="submit"
-                    data-testid="submitCreateAccount"
-                    size="lg">
-                    Create Account
-                </Button>
+                <div className="d-grid">
+                    <Button
+                        className="mb-3"
+                        variant="primary"
+                        type="submit"
+                        data-testid="submitCreateAccount"
+                        size="lg">
+                        Create Account
+                    </Button>
+                    {serverResponseMessage === "Success" ? (
+                        <Alert variant="success" data-testid="redirectMessage">
+                            Success. Redirecting....
+                        </Alert>
+                    ) : serverResponseMessage === "Failure" ? (
+                        <Alert variant="danger" data-testid="redirectMessage">
+                            <p>
+                                Sorry, there may already be an account under
+                                that name. Alternatively, we're having trouble
+                                accessing our server at the moment.
+                            </p>
+                            <hr />
+                            <p>Please wait a few moments and try again.</p>
+                        </Alert>
+                    ) : null}
+                </div>
             </Form>
-            {serverResponseMessage === "Success" ? (
-                <div data-testid="redirectMessage">
-                    Success. Redirecting....
-                </div>
-            ) : serverResponseMessage === "Failure" ? (
-                <div data-testid="redirectMessage">
-                    <p>
-                        Sorry, there may already be an account under that name.
-                        Alternatively, we're having trouble accessing our server
-                        at the moment.
-                    </p>
-                    <p>Please wait a few moments and try again.</p>
-                </div>
-            ) : (
-                ""
-            )}
         </div>
     )
 }

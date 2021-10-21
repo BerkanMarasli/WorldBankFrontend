@@ -1,12 +1,7 @@
 import { useFormik } from "formik"
 import * as Yup from "yup"
-import "bootstrap/dist/css/bootstrap.min.css"
 import { useState } from "react"
-
-import Button from "react-bootstrap/Button"
-import Form from "react-bootstrap/Form"
-import Row from "react-bootstrap/Row"
-import Col from "react-bootstrap/Col"
+import { Button, Form, Row, Col, Alert } from "react-bootstrap"
 
 function Login() {
     const [serverResponseMessage, setServerResponseMessage] = useState("")
@@ -28,7 +23,7 @@ function Login() {
         }),
         onSubmit: async (values) => {
             const result = await sendUserDetailsToServer(values)
-            result === "Success"
+            result === "success"
                 ? setServerResponseMessage("Success")
                 : setServerResponseMessage("Failure")
             //Redirect to search page
@@ -37,22 +32,17 @@ function Login() {
 
     return (
         <div className="text-center">
-            <Form
-                data-testid="loginForm"
-                className="w-50 p-3 offset-md-3"
-                onSubmit={formik.handleSubmit}>
-                <h3>Welcome to World Bank Database.</h3>
-                <p>Please login to your account below: </p>
+            <Form data-testid="loginForm" onSubmit={formik.handleSubmit}>
+                <h2 className="mb-4">Welcome to World Bank Database</h2>
 
                 <Row className="mb-3">
                     <Form.Group>
-                        <Form.Label>Email</Form.Label>
                         <Form.Control
                             id="email"
                             name="email"
                             type="email"
                             data-testid="enterEmail"
-                            placeholder="email"
+                            placeholder="Email"
                             className={validationCSS(
                                 formik.touched.email,
                                 formik.errors.email
@@ -79,7 +69,7 @@ function Login() {
                                 name="password"
                                 type="password"
                                 data-testid="enterPassword"
-                                placeholder="password"
+                                placeholder="Password"
                                 class={validationCSS(
                                     formik.touched.password,
                                     formik.errors.password
@@ -99,32 +89,26 @@ function Login() {
                         </Form.Group>
                     </Col>
                 </Row>
-                <Button
-                    variant="primary"
-                    type="submit"
-                    data-testid="submitLogin"
-                    size="lg">
-                    Login
-                </Button>
+                <div className="d-grid">
+                    <Button
+                        variant="primary"
+                        type="submit"
+                        data-testid="submitLogin"
+                        size="lg">
+                        Login
+                    </Button>
+                    {serverResponseMessage === "Success" ? (
+                        <Alert variant="success" data-testid="redirectMessage">
+                            Success. Redirecting....
+                        </Alert>
+                    ) : serverResponseMessage === "Failure" ? (
+                        <Alert variant="danger" data-testid="redirectMessage">
+                            Sorry, we couldn't find an account with those login
+                            details.
+                        </Alert>
+                    ) : null}
+                </div>
             </Form>
-
-            {serverResponseMessage === "Success" ? (
-                <div data-testid="redirectMessage">
-                    Success. Redirecting....
-                </div>
-            ) : serverResponseMessage === "Failure" ? (
-                <div data-testid="redirectMessage">
-                    <p data-testid="accountNotFound">
-                        Sorry, we couldn't find an account with those login
-                        details.
-                    </p>
-                    <p>Why not create a new account?</p>
-                </div>
-            ) : (
-                <div data-testid="createAccountForm">
-                    Don't have an account? Create an account here.
-                </div>
-            )}
         </div>
     )
 }
@@ -153,11 +137,11 @@ async function sendUserDetailsToServer(values) {
         body: JSON.stringify(values),
     })
         .then(async (response) => {
-            result = await response.json()
+            result = await response.text()
             console.log("response is....")
             console.log(result)
             if (result.error) result = "Error"
-            else result = "Success"
+            else result = "success"
         })
         .catch((error) => {
             console.log("Error:", error)
