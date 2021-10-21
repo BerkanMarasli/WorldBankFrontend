@@ -1,6 +1,9 @@
 import { useFormik } from "formik"
 import * as Yup from "yup"
+<<<<<<< HEAD
 import { useState } from "react"
+=======
+>>>>>>> 7d9ce23d6b84ee87c85df24fd6329b28be26ffd6
 import "bootstrap/dist/css/bootstrap.min.css"
 
 import Button from "react-bootstrap/Button"
@@ -66,9 +69,13 @@ function CreateAccount() {
                             value={formik.values.email}
                         />
                         {formik.touched.email && formik.errors.email ? (
+<<<<<<< HEAD
                             <div
                                 className="invalid-feedback"
                                 data-testid="emailError">
+=======
+                            <div data-testid="emailError">
+>>>>>>> 7d9ce23d6b84ee87c85df24fd6329b28be26ffd6
                                 {formik.errors.email}
                             </div>
                         ) : null}
@@ -93,9 +100,13 @@ function CreateAccount() {
                             />
                             {formik.touched.password &&
                             formik.errors.password ? (
+<<<<<<< HEAD
                                 <div
                                     className="invalid-feedback"
                                     data-testid="requirePassword">
+=======
+                                <div data-testid="requirePassword">
+>>>>>>> 7d9ce23d6b84ee87c85df24fd6329b28be26ffd6
                                     {formik.errors.password}
                                 </div>
                             ) : null}
@@ -119,9 +130,13 @@ function CreateAccount() {
                             />
                             {formik.touched.confirmPassword &&
                             formik.errors.confirmPassword ? (
+<<<<<<< HEAD
                                 <div
                                     className="invalid-feedback"
                                     data-testid="requireConfirmPassword">
+=======
+                                <div data-testid="requireConfirmPassword">
+>>>>>>> 7d9ce23d6b84ee87c85df24fd6329b28be26ffd6
                                     {formik.errors.confirmPassword}
                                 </div>
                             ) : null}
@@ -136,6 +151,7 @@ function CreateAccount() {
                     Create Account
                 </Button>
             </Form>
+<<<<<<< HEAD
             {serverResponseMessage === "Success" ? (
                 <div data-testid="redirectMessage">
                     Success. Redirecting....
@@ -152,6 +168,8 @@ function CreateAccount() {
             ) : (
                 ""
             )}
+=======
+>>>>>>> 7d9ce23d6b84ee87c85df24fd6329b28be26ffd6
         </div>
     )
 }
