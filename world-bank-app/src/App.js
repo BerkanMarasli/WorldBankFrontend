@@ -2,6 +2,7 @@ import "./App.css"
 import CreateAccount from "./CreateAccount"
 import Login from "./Login"
 import MainSearch from "./MainSearch"
+import AdminHistory from "./AdminHistory"
 
 import { default as Router, Route, Switch } from "react-router"
 
@@ -20,14 +21,14 @@ function App() {
                 class="w-25"
                 alt="worldBankLogo"
             />
-
-            <Router>
+            <AdminHistory />
+            {/* <Router>
                 <Switch>
                     <Route exact path="/" component={Login} />
                     <Route path="/createAccount" component={CreateAccount} />
                     <Route path="/mainSearch" component={MainSearch} />
                 </Switch>
-            </Router>
+            </Router> */}
         </div>
     )
 }
