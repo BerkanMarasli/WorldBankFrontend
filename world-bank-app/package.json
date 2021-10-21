@@ -6,21 +6,12 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-<<<<<<< HEAD
     "axios": "^0.23.0",
-=======
->>>>>>> 7d9ce23d6b84ee87c85df24fd6329b28be26ffd6
     "bootstrap": "^5.1.1",
     "formik": "^2.2.9",
-    "prop-types": "^15.7.2",
     "react": "^17.0.2",
-<<<<<<< HEAD
-    "react-axios": "^2.0.5",
     "react-bootstrap": "^2.0.0-rc.1",
     "react-bootstrap-range-slider": "^3.0.2",
-=======
-    "react-bootstrap": "^2.0.0-rc.1",
->>>>>>> 7d9ce23d6b84ee87c85df24fd6329b28be26ffd6
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
     "react-yup": "^1.23.0",
@@ -51,8 +42,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "react-router-dom": "^5.3.0"
   }
 }
