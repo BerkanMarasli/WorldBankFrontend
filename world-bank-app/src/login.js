@@ -1,6 +1,6 @@
 import { useFormik } from "formik"
+import validationCSS from "./createAccount"
 import * as Yup from "yup"
-import "bootstrap/dist/css/bootstrap.min.css"
 import { useState } from "react"
 
 import Button from "react-bootstrap/Button"
@@ -19,12 +19,13 @@ function Login() {
             password: Yup.string()
                 .min(8, "Must be at least 8 characters")
                 .max(20, "Must be 20 characters or less")
-                .required("Required"),
-
+                .required("Required")
+                .label("password"),
             email: Yup.string()
                 .max(35, "Cannot exceed 35 characters")
                 .email("Invalid email address")
-                .required("Required"),
+                .required("Required")
+                .label("email"),
         }),
         onSubmit: async (values) => {
             const result = await sendUserDetailsToServer(values)
@@ -46,7 +47,6 @@ function Login() {
 
                 <Row className="mb-3">
                     <Form.Group>
-                        <Form.Label>Email</Form.Label>
                         <Form.Control
                             id="email"
                             name="email"
@@ -60,7 +60,7 @@ function Login() {
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             value={formik.values.email}
-                            //required
+                            required
                         />
                         {formik.touched.email && formik.errors.email ? (
                             <div
@@ -72,59 +72,42 @@ function Login() {
                     </Form.Group>
                 </Row>
                 <Row className="mb-3">
-                    <Col>
-                        <Form.Group>
-                            <Form.Control
-                                id="password"
-                                name="password"
-                                type="password"
-                                data-testid="enterPassword"
-                                placeholder="password"
-                                class={validationCSS(
-                                    formik.touched.password,
-                                    formik.errors.password
-                                )}
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.password}
-                            />
-                            {formik.touched.password &&
-                            formik.errors.password ? (
-                                <div
-                                    className="invalid-feedback"
-                                    data-testid="requirePassword">
-                                    {formik.errors.password}
-                                </div>
-                            ) : null}
-                        </Form.Group>
-                    </Col>
+                    <Form.Group>
+                        <Form.Control
+                            id="password"
+                            name="password"
+                            type="password"
+                            data-testid="enterPassword"
+                            placeholder="password"
+                            class={validationCSS(
+                                formik.touched.password,
+                                formik.errors.password
+                            )}
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.password}
+                        />
+                        {formik.touched.password && formik.errors.password ? (
+                            <div
+                                className="invalid-feedback"
+                                data-testid="requirePassword">
+                                {formik.errors.password}
+                            </div>
+                        ) : null}
+                    </Form.Group>
                 </Row>
                 <Button
                     variant="primary"
                     type="submit"
                     data-testid="submitLogin"
                     size="lg">
-                    Login
+                    Create Account
                 </Button>
             </Form>
 
-            {serverResponseMessage === "Success" ? (
-                <div data-testid="redirectMessage">
-                    Success. Redirecting....
-                </div>
-            ) : serverResponseMessage === "Failure" ? (
-                <div data-testid="redirectMessage">
-                    <p data-testid="accountNotFound">
-                        Sorry, we couldn't find an account with those login
-                        details.
-                    </p>
-                    <p>Why not create a new account?</p>
-                </div>
-            ) : (
-                <div data-testid="createAccountForm">
-                    Don't have an account? Create an account here.
-                </div> //Will add a link to the createAccount page here when router is complete
-            )}
+            <div data-testid="createAccountForm">
+                Don't have an account? Create an account here.
+            </div>
         </div>
     )
 }
