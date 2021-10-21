@@ -1,52 +1,36 @@
 import Form from "react-bootstrap/Form"
+import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup"
+import ToggleButton from "react-bootstrap/ToggleButton"
 
 function MainSearchCountrySelection(props) {
     const countryNames = props.data
-    const {
-        countryOnlySearch,
-        setCountryOnlySearch,
-        twoCountrySearch,
-        setTwoCountrySearch,
-    } = props.decisions
-    const { setTopCountrySelection, setBottomCountrySelection } =
-        props.selections
+    const { oneCountrySearch, setOneCountrySearch } = props.decisions
+    const { setTopCountrySelection, setBottomCountrySelection } = props.selections
 
     return (
-        <Form.Group controlId="formCountrySelect">
-            <Form.Label>Select a Country</Form.Label>
-            <Form.Switch
-                label="Search One Country"
-                checked={countryOnlySearch}
-                onChange={() =>
-                    setCountryOnlySearch(!countryOnlySearch)
-                }></Form.Switch>
-            {!countryOnlySearch ? (
-                <Form.Switch
-                    label="Compare Two Countries"
-                    checked={twoCountrySearch}
-                    onChange={() =>
-                        setTwoCountrySearch(!twoCountrySearch)
-                    }></Form.Switch>
-            ) : null}
-            <Form.Control
-                as="select"
-                onChange={(e) => setTopCountrySelection(e.target.value)}>
+        <Form.Group className="d-flex flex-column align-items-center w-100" controlId="formCountrySelect">
+            <ToggleButtonGroup
+                className="mt-4 mb-4"
+                type="radio"
+                name="options"
+                defaultValue={oneCountrySearch}
+                onChange={(e) => setOneCountrySearch(e)}>
+                <ToggleButton id="search-oneCountry" value={true}>
+                    Single Country
+                </ToggleButton>
+                <ToggleButton id="search-twoCountries" value={false}>
+                    Two Countries
+                </ToggleButton>
+            </ToggleButtonGroup>
+            <Form.Control className="mb-4 text-center" as="select" onChange={(e) => setTopCountrySelection(e.target.value)}>
                 {countryNames.map((country) => {
-                    return (
-                        <option
-                            value={`${country.countryname}`}>{`${country.countryname}`}</option>
-                    )
+                    return <option value={`${country.countryname}`}>{`${country.countryname}`}</option>
                 })}
             </Form.Control>
-            {twoCountrySearch && !countryOnlySearch ? (
-                <Form.Control
-                    as="select"
-                    onChange={(e) => setBottomCountrySelection(e.target.value)}>
+            {!oneCountrySearch ? (
+                <Form.Control className="mb-4 text-center" as="select" onChange={(e) => setBottomCountrySelection(e.target.value)}>
                     {countryNames.map((country) => {
-                        return (
-                            <option
-                                value={`${country.countryname}`}>{`${country.countryname}`}</option>
-                        )
+                        return <option value={`${country.countryname}`}>{`${country.countryname}`}</option>
                     })}
                 </Form.Control>
             ) : null}
