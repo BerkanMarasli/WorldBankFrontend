@@ -11,9 +11,10 @@ import {
     ResponsiveContainer,
 } from "recharts"
 
-function Graph(props) {
+function GraphOneCountry(props) {
     const [data, setData] = useState(props.data)
     const indicatorName = data[0].indicatorname
+    const countryName = data[0].countryname
 
     return (
         <div className="Graph-container d-flex align-items-center">
@@ -45,7 +46,7 @@ function Graph(props) {
                     <Line
                         type="monotone"
                         dataKey="value"
-                        name={indicatorName}
+                        name={`${countryName} - ${indicatorName}`}
                         stroke="#FF0000"
                         activeDot={{ r: 4 }}
                     />
@@ -55,4 +56,4 @@ function Graph(props) {
     )
 }
 
-export default Graph
+export default GraphOneCountry

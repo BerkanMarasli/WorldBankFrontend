@@ -2,16 +2,9 @@ import Button from "react-bootstrap/Button"
 const axios = require("axios")
 
 function MainSearchButton(props) {
-    const { countryOnlySearch, twoCountrySearch, yearRangeSearch } =
-        props.decisions
-    const {
-        topCountrySelection,
-        bottomCountrySelection,
-        indicatorSelection,
-        topYearSelection,
-        bottomYearSelection,
-    } = props.selections
-    const { setCountryOnlyData } = props.setData
+    const { countryOnlySearch, twoCountrySearch, yearRangeSearch } = props.decisions
+    const { topCountrySelection, bottomCountrySelection, indicatorSelection, topYearSelection, bottomYearSelection } = props.selections
+    const { setGraphData } = props.setData
     return (
         <Button
             variant="primary"
@@ -27,7 +20,7 @@ function MainSearchButton(props) {
                     indicatorSelection,
                     topYearSelection,
                     bottomYearSelection,
-                    setCountryOnlyData
+                    setGraphData
                 )
             }>
             submit
@@ -44,43 +37,42 @@ async function handleSearchClick(
     indicatorSelection,
     topYearSelection,
     bottomYearSelection,
-    setCountryOnlyData
+    setGraphData
 ) {
-    // console.log("SEARCHING...")
-    // console.log("top country selected is: ", topCountrySelection)
-    // console.log("bottom country selected is: ", bottomCountrySelection)
-    // console.log("indicator selected: ", indicatorSelection)
-    // console.log("top year: ", topYearSelection)
-    // console.log("bottom year: ", bottomYearSelection)
     if (countryOnlySearch) {
         console.log("SEARCHING country only")
-        fetchCountryOnly(
-            topCountrySelection,
-            indicatorSelection,
-            setCountryOnlyData
-        )
+        fetchOneCountryOnly(topCountrySelection, indicatorSelection, setGraphData)
     } else if (!countryOnlySearch && twoCountrySearch && !yearRangeSearch) {
         console.log("SEARCHING with two countries but no year range")
     } else if (!countryOnlySearch && twoCountrySearch && yearRangeSearch) {
         console.log("SEARCHING with two countries and year range")
     } else if (!countryOnlySearch && !twoCountrySearch && !yearRangeSearch) {
         console.log("SEARCHING with one countries and no year range")
+        fetchOneCountry(topCountrySelection, indicatorSelection, topYearSelection, setGraphData)
     } else if (!countryOnlySearch && !twoCountrySearch && yearRangeSearch) {
         console.log("SEARCHING with one countries and year range")
+        fetchOneCountryWithYearRange(topCountrySelection, indicatorSelection, topYearSelection, bottomYearSelection, setGraphData)
     }
 }
 
-async function fetchCountryOnly(
-    topCountrySelection,
-    indicatorSelection,
-    setCountryOnlyData
-) {
+async function fetchOneCountryOnly(topCountrySelection, indicatorSelection, setGraphData) {
+    const response = await axios.get(`http://localhost:8080/search/${topCountrySelection}/${indicatorSelection}`)
+    const data = await response.data
+    setGraphData(data)
+}
+
+async function fetchOneCountry(topCountrySelection, indicatorSelection, topYearSelection, setGraphData) {
+    const response = await axios.get(`http://localhost:8080/search/${topCountrySelection}/${indicatorSelection}/${topYearSelection}`)
+    const data = await response.data
+    setGraphData(data)
+}
+
+async function fetchOneCountryWithYearRange(topCountrySelection, indicatorSelection, topYearSelection, bottomYearSelection, setGraphData) {
     const response = await axios.get(
-        `http://localhost:8080/search/${topCountrySelection}/${indicatorSelection}`
+        `http://localhost:8080/search/${topCountrySelection}/${indicatorSelection}/${topYearSelection}/${bottomYearSelection}`
     )
     const data = await response.data
-    console.log(data)
-    setCountryOnlyData(data)
+    setGraphData(data)
 }
 
 export default MainSearchButton

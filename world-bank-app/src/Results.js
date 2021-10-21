@@ -1,14 +1,15 @@
-import GraphOnly from "./GraphOnly"
+import GraphOneCountry from "./GraphOneCountry"
+import { useState } from "react"
 
 function Results(props) {
-    const { countryOnlyData } = props.data
-    console.log("results data:", countryOnlyData)
-    const numberOfDataPoints = countryOnlyData.length
+    const [graphData, setGraphData] = useState(props.data.graphData)
+    const numberOfDataPoints = graphData.length
     return numberOfDataPoints > 1 ? (
-        <GraphOnly data={countryOnlyData}></GraphOnly>
+        <GraphOneCountry data={graphData}></GraphOneCountry>
     ) : numberOfDataPoints === 1 ? (
         <p>
-            Only available: year={countryOnlyData[0].year} : value={countryOnlyData[0].value}
+            Only available: year={graphData[0].year} : value=
+            {graphData[0].value}
         </p>
     ) : (
         <p>No Information Available For Search</p>

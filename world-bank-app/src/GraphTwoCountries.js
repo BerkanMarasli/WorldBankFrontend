@@ -13,7 +13,7 @@ import {
 } from "recharts"
 const axios = require("axios")
 
-function Graph(props) {
+function GraphTwoCountries(props) {
     const [data, setData] = useState(null)
     const [data2, setData2] = useState(null)
     const mainData = []
@@ -108,4 +108,4 @@ async function fetchDummyData2(setData2, setCompareCountries) {
     setCompareCountries(true)
 }
 
-export default Graph
+export default GraphTwoCountries
