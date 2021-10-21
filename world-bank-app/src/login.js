@@ -27,7 +27,7 @@ function Login() {
 
     return (
         <div className="text-center">
-            <Form data-testid="loginForm" onSubmit={formik.handleSubmit}>
+            <Form data-testid="loginForm" onSubmit={formik.handleSubmit} noValidate>
                 <h2 className="mb-4">Welcome to World Bank Database</h2>
 
                 <Row className="mb-3">
