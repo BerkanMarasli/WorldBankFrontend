@@ -1,9 +1,9 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { act } from "react-dom/test-utils"
-import Login from "./login"
+import Login from "./Login"
 
-describe("createAccount form", () => {
+describe("Login form", () => {
     test("Component gets rendered", () => {
         render(<Login />)
     })
@@ -26,6 +26,25 @@ describe("createAccount form", () => {
     // test("Form has option to switch to createAccount form", () => {
     //     render(<Login />)
     //     expect(screen.getByTestId("createAccountForm")).toBeInTheDocument()
+<<<<<<< HEAD
+=======
+    // })
+    // test("Submitting form with no password creates error message", async () => {
+    //     await act(async () => {
+    //         render(<CreateAccount />)
+    //         await userEvent.click(screen.getByTestId("submitCreateAccount"))
+    //     })
+    //     expect(screen.getByTestId("requirePassword")).toBeInTheDocument()
+    // })
+    // test("The following is an invalid email address: 'bbb' ", async () => {
+    //     await act(async () => {
+    //         render(<CreateAccount />)
+    //         await userEvent.type(screen.getByTestId("createUsername"), "b")
+    //         await userEvent.type(screen.getByTestId("createUsername"), "b")
+    //         await userEvent.type(screen.getByTestId("createUsername"), "b")
+    //     })
+    //     expect(screen.getByTestId("createUsername")).toHaveValue("bbb")
+>>>>>>> 7d9ce23d6b84ee87c85df24fd6329b28be26ffd6
     // })
     test("Submitting form with no password creates error message", async () => {
         await act(async () => {
@@ -53,6 +72,58 @@ describe("createAccount form", () => {
         })
         expect(screen.getByTestId("requirePassword")).toBeInTheDocument()
     })
+    test("Filling in form and clicking 'Login' submits the data", async () => {
+        await act(async () => {
+            render(<Login />)
 
-    //Add tests for endpoint :) and for switching to createAccount form :)
+            await userEvent.type(screen.getByTestId("enterEmail"), "b")
+            await userEvent.type(screen.getByTestId("enterEmail"), "@")
+            await userEvent.type(screen.getByTestId("enterEmail"), "b")
+            await userEvent.type(screen.getByTestId("enterEmail"), ".")
+            await userEvent.type(screen.getByTestId("enterEmail"), "b")
+
+            await userEvent.type(screen.getByTestId("enterPassword"), "b")
+            await userEvent.type(screen.getByTestId("enterPassword"), "b")
+            await userEvent.type(screen.getByTestId("enterPassword"), "b")
+            await userEvent.type(screen.getByTestId("enterPassword"), "b")
+            await userEvent.type(screen.getByTestId("enterPassword"), "b")
+            await userEvent.type(screen.getByTestId("enterPassword"), "b")
+            await userEvent.type(screen.getByTestId("enterPassword"), "b")
+            await userEvent.type(screen.getByTestId("enterPassword"), "b")
+        })
+
+        await userEvent.click(screen.getByTestId("submitLogin"))
+
+        await waitFor(() => {
+            expect(screen.getByTestId("redirectMessage")).toBeInTheDocument()
+        })
+    })
+    test("Trying to login to an account that does not exist will display the relevant error message ", async () => {
+        await act(async () => {
+            render(<Login />)
+
+            await userEvent.type(screen.getByTestId("enterEmail"), "b")
+            await userEvent.type(screen.getByTestId("enterEmail"), "@")
+            await userEvent.type(screen.getByTestId("enterEmail"), "b")
+            await userEvent.type(screen.getByTestId("enterEmail"), ".")
+            await userEvent.type(screen.getByTestId("enterEmail"), "b")
+
+            await userEvent.type(screen.getByTestId("enterPassword"), "b")
+            await userEvent.type(screen.getByTestId("enterPassword"), "b")
+            await userEvent.type(screen.getByTestId("enterPassword"), "b")
+            await userEvent.type(screen.getByTestId("enterPassword"), "b")
+            await userEvent.type(screen.getByTestId("enterPassword"), "b")
+            await userEvent.type(screen.getByTestId("enterPassword"), "b")
+            await userEvent.type(screen.getByTestId("enterPassword"), "b")
+            await userEvent.type(screen.getByTestId("enterPassword"), "b")
+        })
+
+        await userEvent.click(screen.getByTestId("submitLogin"))
+
+        await waitFor(() => {
+            expect(screen.getByTestId("accountNotFound")).toBeInTheDocument()
+        })
+
+        //Add tests for endpoint :) and for switching to createAccount form :)
+    })
 })
