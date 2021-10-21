@@ -2,13 +2,14 @@ import "./App.css"
 import CreateAccount from "./CreateAccount"
 import Login from "./Login"
 import MainSearch from "./MainSearch"
+import Graph from "./Graph"
 import AdminHistory from "./AdminHistory"
 
 import { default as Router, Route, Switch } from "react-router"
 
 function App() {
     return (
-        <div className="text-center">
+        <div className="text-center d-flex flex-column align-items-center">
             <head>
                 <link
                     rel="stylesheet"

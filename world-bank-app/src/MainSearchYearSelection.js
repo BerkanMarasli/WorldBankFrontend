@@ -1,6 +1,6 @@
 import Form from "react-bootstrap/Form"
 import "react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css"
-import RangeSlider from "react-bootstrap-range-slider"
+import RangeSlider from "react-bootstrap-range-slider" // yarn add react-bootstrap-range-slider
 import { useState } from "react"
 
 function MainSearchYearSelection(props) {
