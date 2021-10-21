@@ -1,5 +1,5 @@
 import { useFormik } from "formik"
-import validationCSS from "./createAccount"
+//import validationCSS from "./createAccount" NOTE FOR GITHUB: Make sure you delete this commented out line please
 import * as Yup from "yup"
 import { useState } from "react"
 
@@ -104,13 +104,33 @@ function Login() {
                     Create Account
                 </Button>
             </Form>
-
-            <div data-testid="createAccountForm">
-                Don't have an account? Create an account here.
-            </div>
+            {serverResponseMessage === "Success" ? (
+                <div data-testid="redirectMessage">
+                    Success. Redirecting....
+                </div>
+            ) : serverResponseMessage === "Failure" ? (
+                <div data-testid="redirectMessage">
+                    <p data-testid="accountNotFound">
+                        Sorry, we couldn't find an account with those login
+                        details.
+                    </p>
+                    <p>Why not create a new account?</p>
+                </div>
+            ) : (
+                <div data-testid="createAccountForm">
+                    Don't have an account? Create an account here.
+                </div> //Will add a link to the createAccount page here when router is complete
+            )}
         </div>
     )
 }
+
+//             <div data-testid="createAccountForm">
+//                 Don't have an account? Create an account here.
+//             </div>
+//         </div>
+//     )
+// }
 
 //NOTE: I know this function could just be imported from ""./createAccount", but for whatever reason
 //the css breaks if you import this function instead of just copy + pasting it here. - Sean

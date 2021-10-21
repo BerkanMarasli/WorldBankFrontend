@@ -22,6 +22,7 @@ function App() {
                 alt="worldBankLogo"
             />
             <AdminHistory />
+            {/* <MainSearch /> */}
             {/* <Router>
                 <Switch>
                     <Route exact path="/" component={Login} />
