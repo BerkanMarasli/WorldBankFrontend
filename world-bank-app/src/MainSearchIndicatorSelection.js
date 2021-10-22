@@ -6,9 +6,7 @@ function MainSearchIndicatorSelection(props) {
     const { setIndicatorSelection } = props.selections
     return (
         <Form.Group className="d-flex flex-column align-items-center w-100" controlId="formBasicSelect">
-            <ToggleButton className="mb-4" id="search-selectIndicator" value={null}>
-                Select an Indicator
-            </ToggleButton>
+            <h3 className="mb-4">Select an Indicator</h3>
             <Form.Control className="text-center" as="select" onChange={(e) => setIndicatorSelection(e.target.value)}>
                 {indicatorNames.map((indicator) => {
                     return <option value={`${indicator.indicatorcode}`}>{`${indicator.indicatorname}`}</option>

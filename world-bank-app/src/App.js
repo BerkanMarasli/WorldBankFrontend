@@ -17,7 +17,7 @@ function App() {
         }
         checkUserLoggedIn()
     }, [])
-    return !isLoggedIn ? <LandingPage setIsLoggedIn={setIsLoggedIn} /> : <MainPage />
+    return !isLoggedIn ? <LandingPage setIsLoggedIn={setIsLoggedIn} /> : <MainPage setIsLoggedIn={setIsLoggedIn} />
 }
 
 export default App

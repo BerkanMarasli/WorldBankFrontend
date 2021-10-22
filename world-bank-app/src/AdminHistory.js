@@ -1,5 +1,5 @@
 import SearchItem from "./SearchItem"
-import { CardGroup, Card, Button, ToggleButton } from "react-bootstrap"
+import { CardGroup, ToggleButton, Row, Col, Accordion } from "react-bootstrap"
 import { useEffect, useState } from "react"
 
 function AdminHistory() {
@@ -12,12 +12,21 @@ function AdminHistory() {
         if (searches.length < 1) waitForHistory()
     }, [])
     return (
-        <div className="d-flex flex-column align-items-center w-100">
-            <ToggleButton className="mb-4" id="search-selectIndicator" value={null}>
-                Search History
-            </ToggleButton>
-
-            {searches.length === 0 ? "No searches/No access to server" : <div data-testid="userSearchItems">{getSearchItemsDisplay(searches)}</div>}
+        <div className="d-flex mx-auto justify-content-center">
+            <Accordion className="mb-5 w-75" defaultActiveKey="0">
+                <Accordion.Item eventKey="0">
+                    <Accordion.Header>Search History</Accordion.Header>
+                    <Accordion.Body>
+                        {searches.length === 0 ? (
+                            "No searches/No access to server"
+                        ) : (
+                            <div className="d-flex justify-content-center" data-testid="userSearchItems">
+                                {getSearchItemsDisplay(searches)}
+                            </div>
+                        )}
+                    </Accordion.Body>
+                </Accordion.Item>
+            </Accordion>
         </div>
     )
 }
@@ -44,22 +53,30 @@ async function getHistory(values) {
 
 function getSearchItemsDisplay(searches) {
     return (
-        <div>
-            {searches.length < 1
-                ? "No searches atm"
-                : searches.map((search) => {
-                      return (
-                          <SearchItem
-                              country_1={search.country_1}
-                              country_2={search.country_2}
-                              indicator={search.indicator}
-                              date_time={search.date_time}
-                              year_1={search.year_1}
-                              year_2={search.year_2}
-                              user_id={search.user_id}
-                          />
-                      )
-                  })}
+        <div className="d-flex w-90 align-content-center mb-5">
+            {searches.length < 1 ? (
+                "No searches atm"
+            ) : (
+                <CardGroup>
+                    <Row xs={1} md={2} className="g-4">
+                        {searches.map((search) => {
+                            return (
+                                <Col>
+                                    <SearchItem
+                                        country_1={search.country_1}
+                                        country_2={search.country_2}
+                                        indicator={search.indicator}
+                                        date_time={search.date_time}
+                                        year_1={search.year_1}
+                                        year_2={search.year_2}
+                                        user_id={search.user_id}
+                                    />
+                                </Col>
+                            )
+                        })}
+                    </Row>
+                </CardGroup>
+            )}
         </div>
     )
 }

@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form"
 import Button from "react-bootstrap/Button"
 import { useFormik } from "formik"
 import { useEffect, useState } from "react"
+import { date } from "yup/lib/locale"
 
 function SearchItem(props) {
     const [username, setUsername] = useState("")
@@ -43,7 +44,7 @@ function SearchItem(props) {
             </Card.Body>
             <Card.Footer>
                 <small data-testid="time" className="text-muted">
-                    Search occurred on {props.date_time}
+                    Search occurred on {getDateTimeString(props.date_time)}
                 </small>
             </Card.Footer>
         </Card>
@@ -59,6 +60,11 @@ async function getUsername(userId) {
     const response = await fetchUsername.json()
 
     return response[0].email
+}
+
+function getDateTimeString(UTCDateTime) {
+    let dateTimeStr = new Date(UTCDateTime)
+    return dateTimeStr.toString()
 }
 
 export default SearchItem

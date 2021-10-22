@@ -22,18 +22,20 @@ function MainSearchCountrySelection(props) {
                     Two Countries
                 </ToggleButton>
             </ToggleButtonGroup>
-            <Form.Control className="mb-4 text-center" as="select" onChange={(e) => setTopCountrySelection(e.target.value)}>
-                {countryNames.map((country) => {
-                    return <option value={`${country.countryname}`}>{`${country.countryname}`}</option>
-                })}
-            </Form.Control>
-            {!oneCountrySearch ? (
-                <Form.Control className="mb-4 text-center" as="select" onChange={(e) => setBottomCountrySelection(e.target.value)}>
+            <div className="d-flex justify-content-between w-100">
+                <Form.Control className="mb-4 text-center" as="select" onChange={(e) => setTopCountrySelection(e.target.value)}>
                     {countryNames.map((country) => {
                         return <option value={`${country.countryname}`}>{`${country.countryname}`}</option>
                     })}
                 </Form.Control>
-            ) : null}
+                {!oneCountrySearch ? (
+                    <Form.Control className="mb-4 text-center" as="select" onChange={(e) => setBottomCountrySelection(e.target.value)}>
+                        {countryNames.map((country) => {
+                            return <option value={`${country.countryname}`}>{`${country.countryname}`}</option>
+                        })}
+                    </Form.Control>
+                ) : null}
+            </div>
         </Form.Group>
     )
 }

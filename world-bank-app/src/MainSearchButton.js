@@ -151,7 +151,7 @@ async function addSearchToHistory(countryOne, countryTwo, indicatorName, yearOne
     const response = await axios.post(`http://localhost:8080/postHistory`, {
         countryOne: countryOne,
         countryTwo: countryTwo,
-        indicatorName: indicatorName,
+        indicatorCode: indicatorName,
         yearOne: yearOne,
         yearTwo: yearTwo,
         user_id: user_id,
