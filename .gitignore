@@ -1,2 +1,4 @@
 # Local Netlify folder
 .netlify
+world-bank-app/.env.development
+world-bank-app/.env.production
