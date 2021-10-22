@@ -53,7 +53,7 @@ function SearchItem(props) {
 
 async function getUsername(userId) {
     //fetch username here
-    const fetchUsername = await fetch(`http://localhost:8080/username/${userId}`).catch((error) => {
+    const fetchUsername = await fetch(`${process.env.REACT_APP_API_URL}/username/${userId}`).catch((error) => {
         console.log("Failed to fetch bro. ")
         console.log(error)
     })

@@ -79,20 +79,20 @@ async function handleSearchClick(
 }
 
 async function fetchOneCountryOnly(topCountrySelection, indicatorSelection, setGraphData) {
-    const response = await axios.get(`http://localhost:8080/search/${topCountrySelection}/${indicatorSelection}`)
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}/search/${topCountrySelection}/${indicatorSelection}`)
     const data = await response.data
     setGraphData(data)
 }
 
 async function fetchOneCountryWithYear(topCountrySelection, indicatorSelection, topYearSelection, setGraphData) {
-    const response = await axios.get(`http://localhost:8080/search/${topCountrySelection}/${indicatorSelection}/${topYearSelection}`)
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}/search/${topCountrySelection}/${indicatorSelection}/${topYearSelection}`)
     const data = await response.data
     setGraphData(data)
 }
 
 async function fetchOneCountryWithYearRange(topCountrySelection, indicatorSelection, topYearSelection, bottomYearSelection, setGraphData) {
     const response = await axios.get(
-        `http://localhost:8080/search/${topCountrySelection}/${indicatorSelection}/${topYearSelection}/${bottomYearSelection}`
+        `${process.env.REACT_APP_API_URL}/search/${topCountrySelection}/${indicatorSelection}/${topYearSelection}/${bottomYearSelection}`
     )
     const data = await response.data
     setGraphData(data)
@@ -118,9 +118,13 @@ async function fetchTwoCountriesWithYear(
     setCountry1Data,
     setCountry2Data
 ) {
-    const responseCountry1 = await axios.get(`http://localhost:8080/search/${topCountrySelection}/${indicatorSelection}/${topYearSelection}`)
+    const responseCountry1 = await axios.get(
+        `${process.env.REACT_APP_API_URL}/search/${topCountrySelection}/${indicatorSelection}/${topYearSelection}`
+    )
     const dataCountry1 = await responseCountry1.data
-    const responseCountry2 = await axios.get(`http://localhost:8080/search/${bottomCountrySelection}/${indicatorSelection}/${topYearSelection}`)
+    const responseCountry2 = await axios.get(
+        `${process.env.REACT_APP_API_URL}/search/${bottomCountrySelection}/${indicatorSelection}/${topYearSelection}`
+    )
     const dataCountry2 = await responseCountry2.data
     setCountry1Data(dataCountry1)
     setCountry2Data(dataCountry2)
@@ -136,11 +140,11 @@ async function fetchTwoCountriesWithYearRange(
     setCountry2Data
 ) {
     const responseCountry1 = await axios.get(
-        `http://localhost:8080/search/${topCountrySelection}/${indicatorSelection}/${topYearSelection}/${bottomYearSelection}`
+        `${process.env.REACT_APP_API_URL}/search/${topCountrySelection}/${indicatorSelection}/${topYearSelection}/${bottomYearSelection}`
     )
     const dataCountry1 = await responseCountry1.data
     const responseCountry2 = await axios.get(
-        `http://localhost:8080/search/${bottomCountrySelection}/${indicatorSelection}/${topYearSelection}/${bottomYearSelection}`
+        `${process.env.REACT_APP_API_URL}/search/${bottomCountrySelection}/${indicatorSelection}/${topYearSelection}/${bottomYearSelection}`
     )
     const dataCountry2 = await responseCountry2.data
     setCountry1Data(dataCountry1)
@@ -148,7 +152,7 @@ async function fetchTwoCountriesWithYearRange(
 }
 
 async function addSearchToHistory(countryOne, countryTwo, indicatorName, yearOne, yearTwo, user_id) {
-    const response = await axios.post(`http://localhost:8080/postHistory`, {
+    const response = await axios.post(`${process.env.REACT_APP_API_URL}/postHistory`, {
         countryOne: countryOne,
         countryTwo: countryTwo,
         indicatorCode: indicatorName,

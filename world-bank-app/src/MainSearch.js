@@ -109,19 +109,19 @@ function MainSearch() {
 }
 
 async function fetchCountries(setCountries) {
-    const response = await axios.get("http://localhost:8080/distinctCountries")
+    const response = await axios.get(process.env.REACT_APP_API_URL + "/distinctCountries")
     const data = await response.data
     setCountries(data)
 }
 
 async function fetchIndicators(setIndicators) {
-    const response = await axios.get("http://localhost:8080/distinctIndicators")
+    const response = await axios.get(process.env.REACT_APP_API_URL + "/distinctIndicators")
     const data = await response.data
     setIndicators(data)
 }
 
 async function fetchYears(setYears) {
-    const response = await axios.get("http://localhost:8080/distinctYears")
+    const response = await axios.get(process.env.REACT_APP_API_URL + "/distinctYears")
     const data = await response.data
     setYears(data)
 }

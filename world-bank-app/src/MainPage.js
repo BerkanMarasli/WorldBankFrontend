@@ -28,7 +28,7 @@ export default function MainPage(props) {
 
 function handleLogout(setIsLoggedIn) {
     setIsLoggedIn(false)
-    const newCookies = document.cookie.split(";").forEach((cookie) => {
+    document.cookie.split(";").forEach((cookie) => {
         if (cookie.includes("worldBankAppSessionID")) {
             document.cookie = "worldBankAppSessionID=; max-age=0"
         }

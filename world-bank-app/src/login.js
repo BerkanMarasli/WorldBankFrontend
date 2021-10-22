@@ -109,7 +109,7 @@ function validationCSS(userHasVisited, errorStatus) {
 async function sendUserDetailsToServer(values) {
     //Localhost may need to be updated when we start hosting the server
     let result = ""
-    const submitToServer = await fetch("http://localhost:8080/login", {
+    const submitToServer = await fetch(process.env.REACT_APP_API_URL + "/login", {
         method: "POST",
         credentials: "include",
         headers: {

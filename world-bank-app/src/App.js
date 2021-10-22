@@ -8,7 +8,7 @@ function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     useEffect(() => {
         async function checkUserLoggedIn() {
-            const response = await axios.get("http://localhost:8080/sessions", { withCredentials: true })
+            const response = await axios.get(process.env.REACT_APP_API_URL + "/sessions", { withCredentials: true })
             const statusCode = await response.status
             console.log(statusCode)
             if (statusCode === 200) {
