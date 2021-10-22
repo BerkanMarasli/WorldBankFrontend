@@ -1,5 +1,6 @@
 import Button from "react-bootstrap/Button"
 const axios = require("axios")
+const ADMIN_ID = 106
 
 function MainSearchButton(props) {
     const { oneCountrySearch, yearRangeSearch } = props.decisions
@@ -48,9 +49,11 @@ async function handleSearchClick(
     if (oneCountrySearch) {
         // SEARCHING country only
         fetchOneCountryOnly(topCountrySelection, indicatorSelection, setGraphData)
+        addSearchToHistory(topCountrySelection, null, indicatorSelection, 1960, 2015, ADMIN_ID)
     } else if (!oneCountrySearch && !yearRangeSearch) {
         // SEARCHING with two countries but no year range
         fetchTwoCountriesWithYear(topCountrySelection, bottomCountrySelection, indicatorSelection, topYearSelection, setCountry1Data, setCountry2Data)
+        addSearchToHistory(topCountrySelection, bottomCountrySelection, indicatorSelection, topYearSelection, null, ADMIN_ID)
     } else if (!oneCountrySearch && yearRangeSearch) {
         // SEARCHING with two countries and year range
         fetchTwoCountriesWithYearRange(
@@ -62,12 +65,15 @@ async function handleSearchClick(
             setCountry1Data,
             setCountry2Data
         )
+        addSearchToHistory(topCountrySelection, bottomCountrySelection, indicatorSelection, bottomYearSelection, topYearSelection, ADMIN_ID)
     } else if (!oneCountrySearch && !yearRangeSearch) {
         // SEARCHING with one countries and no year range
         fetchOneCountryWithYear(topCountrySelection, indicatorSelection, topYearSelection, setGraphData)
+        addSearchToHistory(topCountrySelection, null, indicatorSelection, topYearSelection, null, ADMIN_ID)
     } else if (!oneCountrySearch && yearRangeSearch) {
         // SEARCHING with one countries and year range
         fetchOneCountryWithYearRange(topCountrySelection, indicatorSelection, topYearSelection, bottomYearSelection, setGraphData)
+        addSearchToHistory(topCountrySelection, null, indicatorSelection, bottomYearSelection, topYearSelection, ADMIN_ID)
     }
     setDisplayMainSearch("none")
 }
@@ -139,6 +145,18 @@ async function fetchTwoCountriesWithYearRange(
     const dataCountry2 = await responseCountry2.data
     setCountry1Data(dataCountry1)
     setCountry2Data(dataCountry2)
+}
+
+async function addSearchToHistory(countryOne, countryTwo, indicatorName, yearOne, yearTwo, user_id) {
+    const response = await axios.post(`http://localhost:8080/postHistory`, {
+        countryOne: countryOne,
+        countryTwo: countryTwo,
+        indicatorName: indicatorName,
+        yearOne: yearOne,
+        yearTwo: yearTwo,
+        user_id: user_id,
+    })
+    const data = await response.data
 }
 
 export default MainSearchButton

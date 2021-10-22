@@ -1,7 +1,5 @@
 import SearchItem from "./SearchItem"
-import CardGroup from "react-bootstrap/CardGroup"
-import Card from "react-bootstrap/Card"
-import Button from "react-bootstrap/Button"
+import { CardGroup, Card, Button, ToggleButton } from "react-bootstrap"
 import { useEffect, useState } from "react"
 
 function AdminHistory() {
@@ -12,18 +10,14 @@ function AdminHistory() {
             setSearches(result)
         }
         if (searches.length < 1) waitForHistory()
-    })
+    }, [])
     return (
-        <div>
-            <h3>Search History</h3>
+        <div className="d-flex flex-column align-items-center w-100">
+            <ToggleButton className="mb-4" id="search-selectIndicator" value={null}>
+                Search History
+            </ToggleButton>
 
-            {searches.length === 0 ? (
-                "No searches/No access to server"
-            ) : (
-                <div data-testid="userSearchItems">
-                    {getSearchItemsDisplay(searches)}
-                </div>
-            )}
+            {searches.length === 0 ? "No searches/No access to server" : <div data-testid="userSearchItems">{getSearchItemsDisplay(searches)}</div>}
         </div>
     )
 }
@@ -39,14 +33,12 @@ async function getHistory(values) {
         body: JSON.stringify(values),
     })
         .then(async (response) => {
-            console.log("got a response")
             result = await response.json()
         })
         .catch((error) => {
             console.log("Error:", error)
             result = "error"
         })
-    console.log("getting hsitory")
     return result
 }
 
@@ -61,7 +53,7 @@ function getSearchItemsDisplay(searches) {
                               country_1={search.country_1}
                               country_2={search.country_2}
                               indicator={search.indicator}
-                              time={search.time}
+                              date_time={search.date_time}
                               year_1={search.year_1}
                               year_2={search.year_2}
                               user_id={search.user_id}

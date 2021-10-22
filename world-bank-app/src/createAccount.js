@@ -4,7 +4,8 @@ import { useState } from "react"
 
 import { Button, Form, Row, Col, Alert } from "react-bootstrap"
 
-function CreateAccount() {
+function CreateAccount(props) {
+    const { handleModalClose } = props
     const [serverResponseMessage, setServerResponseMessage] = useState("")
     const formik = useFormik({
         initialValues: {
@@ -21,8 +22,12 @@ function CreateAccount() {
         }),
         onSubmit: async (values) => {
             const result = await sendUserDetailsToServer(values)
-            result === "Success" ? setServerResponseMessage("Success") : setServerResponseMessage("Failure")
-            //Redirect to search page
+            if (result === "Success") {
+                setServerResponseMessage("Success")
+                handleModalClose()
+            } else {
+                setServerResponseMessage("Failure")
+            }
         },
     })
 
@@ -36,7 +41,7 @@ function CreateAccount() {
                             name="email"
                             type="email"
                             data-testid="createUsername"
-                            placeholder="email"
+                            placeholder="Email"
                             className={validationCSS(formik.touched.email, formik.errors.email)}
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
@@ -57,7 +62,7 @@ function CreateAccount() {
                                 name="password"
                                 type="password"
                                 data-testid="createPassword"
-                                placeholder="password"
+                                placeholder="Password"
                                 class={validationCSS(formik.touched.password, formik.errors.password)}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
@@ -77,7 +82,7 @@ function CreateAccount() {
                                 name="confirmPassword"
                                 type="password"
                                 data-testid="confirmPassword"
-                                placeholder="confirm password"
+                                placeholder="Confirm Password"
                                 class={validationCSS(formik.touched.confirmPassword, formik.errors.confirmPassword)}
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
@@ -133,7 +138,7 @@ async function sendUserDetailsToServer(values) {
         body: JSON.stringify(values),
     })
         .then(async (response) => {
-            result = await response.json()
+            result = await response.text()
             if (result.name === "error") result = "Error"
             else result = "Success"
         })

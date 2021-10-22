@@ -4,7 +4,8 @@ import Login from "./Login"
 import Logo from "./assets/logo.svg"
 import CreateAccount from "./CreateAccount"
 
-export default function LandingPage() {
+export default function LandingPage(props) {
+    const { setIsLoggedIn } = props
     const [show, setShow] = useState(false)
 
     const handleClose = () => setShow(false)
@@ -13,24 +14,14 @@ export default function LandingPage() {
     return (
         <Container className="d-flex flex-column justify-content-center h-100">
             <Row>
-                <Col
-                    className="d-inline-flex flex-column justify-content-center"
-                    xs={12}
-                    md={7}>
-                    <img
-                        src={Logo}
-                        className="d-inline-block align-top w-75"
-                        alt="World Bank logo"
-                    />
+                <Col className="d-inline-flex flex-column justify-content-center" xs={12} md={7}>
+                    <img src={Logo} className="d-inline-block align-top w-75" alt="World Bank logo" />
                 </Col>
                 <Col xs={8} md={5}>
-                    <Login />
+                    <Login setIsLoggedIn={setIsLoggedIn} />
                     <hr />
                     <div className="d-grid">
-                        <Button
-                            variant="success"
-                            size="lg"
-                            onClick={handleShow}>
+                        <Button variant="success" size="lg" onClick={handleShow}>
                             Create Account
                         </Button>
                     </div>
@@ -39,7 +30,7 @@ export default function LandingPage() {
                             <Modal.Title>Create an Account</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <CreateAccount />
+                            <CreateAccount handleModalClose={handleClose} />
                         </Modal.Body>
                     </Modal>
                 </Col>

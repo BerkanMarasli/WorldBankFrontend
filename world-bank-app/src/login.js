@@ -3,7 +3,8 @@ import * as Yup from "yup"
 import { useState } from "react"
 import { Button, Form, Row, Col, Alert } from "react-bootstrap"
 
-function Login() {
+function Login(props) {
+    const { setIsLoggedIn } = props
     const [serverResponseMessage, setServerResponseMessage] = useState("")
     const formik = useFormik({
         initialValues: {
@@ -20,8 +21,12 @@ function Login() {
         }),
         onSubmit: async (values) => {
             const result = await sendUserDetailsToServer(values)
-            result === "success" ? setServerResponseMessage("Success") : setServerResponseMessage("Failure")
-            //Redirect to search page
+            if (result === "Success") {
+                setServerResponseMessage("Success")
+                setIsLoggedIn(true)
+            } else {
+                setServerResponseMessage("Failure")
+            }
         },
     })
 
@@ -74,7 +79,7 @@ function Login() {
                     </Col>
                 </Row>
                 <div className="d-grid">
-                    <Button variant="primary" type="submit" data-testid="submitLogin" size="lg">
+                    <Button className="mb-3" variant="primary" type="submit" data-testid="submitLogin" size="lg">
                         Login
                     </Button>
                     {serverResponseMessage === "Success" ? (
@@ -103,31 +108,27 @@ function validationCSS(userHasVisited, errorStatus) {
 
 async function sendUserDetailsToServer(values) {
     //Localhost may need to be updated when we start hosting the server
-    console.log("submitting....")
     let result = ""
-
-    console.log("You are sending...")
-    console.log(JSON.stringify(values))
     const submitToServer = await fetch("http://localhost:8080/login", {
         method: "POST",
+        credentials: "include",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify(values),
     })
         .then(async (response) => {
-            result = await response.text()
-            console.log("response is....")
-            console.log(result)
-            if (result.error) result = "Error"
-            else result = "success"
+            result = await response.status
+            if (result === 200) {
+                result = "Success"
+            } else {
+                result = "error"
+            }
         })
         .catch((error) => {
             console.log("Error:", error)
             result = "error"
         })
-    console.log("result is...")
-    console.log(result)
     return result
 }
 

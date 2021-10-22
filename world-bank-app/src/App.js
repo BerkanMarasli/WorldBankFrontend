@@ -1,23 +1,23 @@
+import React, { useState, useEffect } from "react"
 import "./App.css"
 import LandingPage from "./LandingPage"
-import MainSearch from "./MainSearch"
+import MainPage from "./MainPage"
+const axios = require("axios")
 
 function App() {
-    // return <LandingPage />
-    return <MainSearch />
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    useEffect(() => {
+        async function checkUserLoggedIn() {
+            const response = await axios.get("http://localhost:8080/sessions", { withCredentials: true })
+            const statusCode = await response.status
+            console.log(statusCode)
+            if (statusCode === 200) {
+                setIsLoggedIn(true)
+            }
+        }
+        checkUserLoggedIn()
+    }, [])
+    return !isLoggedIn ? <LandingPage setIsLoggedIn={setIsLoggedIn} /> : <MainPage />
 }
-/* <Navbar bg="transparent">
-    <Container>
-        <Navbar.Brand href="/">
-            <img
-                src={Logo}
-                width="250"
-                className="d-inline-block align-top"
-                alt="World Bank logo"
-            />
-        </Navbar.Brand>
-        <Button variant="outline-secondary">Logout</Button>
-    </Container>
-</Navbar> */
 
 export default App
