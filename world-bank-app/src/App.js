@@ -1,8 +1,10 @@
 import "./App.css"
 import LandingPage from "./LandingPage"
+import MainSearch from "./MainSearch"
 
 function App() {
-    return <LandingPage />
+    // return <LandingPage />
+    return <MainSearch />
 }
 /* <Navbar bg="transparent">
     <Container>

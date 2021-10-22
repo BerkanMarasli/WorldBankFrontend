@@ -12,8 +12,7 @@ function MainSearch() {
     const [indicators, setIndicators] = useState(null)
     const [years, setYears] = useState(null)
     //
-    const [countryOnlySearch, setCountryOnlySearch] = useState(true)
-    const [twoCountrySearch, setTwoCountrySearch] = useState(false)
+    const [oneCountrySearch, setOneCountrySearch] = useState(true)
     const [yearRangeSearch, setYearRangeSearch] = useState(false)
     //
     const [topCountrySelection, setTopCountrySelection] = useState(null)
@@ -22,7 +21,6 @@ function MainSearch() {
     const [topYearSelection, setTopYearSelection] = useState(null)
     const [bottomYearSelection, setBottomYearSelection] = useState(null)
     //
-    const [numberOfCountriesCompared, setNumberOfCountriesCompared] = useState(1)
     const [graphData, setGraphData] = useState(null)
     const [country1Data, setCountry1Data] = useState(null)
     const [country2Data, setCountry2Data] = useState(null)
@@ -36,74 +34,65 @@ function MainSearch() {
     }, [])
 
     return (
-        <div>
-            <div style={{ display: displayMainSearch }}>
-                {countries ? (
-                    <MainSearchCountrySelection
-                        data={countries}
-                        decisions={{
-                            setCountryOnlySearch: setCountryOnlySearch,
-                            countryOnlySearch: countryOnlySearch,
-                            twoCountrySearch: twoCountrySearch,
-                            setTwoCountrySearch: setTwoCountrySearch,
-                        }}
-                        selections={{
-                            setTopCountrySelection: setTopCountrySelection,
-                            setBottomCountrySelection: setBottomCountrySelection,
-                        }}
-                    />
+        <div className="d-flex flex-column align-items-center">
+            <div className="ml-auto mr-auto" style={{ display: displayMainSearch }}>
+                {countries && indicators && years ? (
+                    <div className="d-inline-flex flex-column w-80 align-items-center">
+                        <MainSearchCountrySelection
+                            data={countries}
+                            decisions={{
+                                oneCountrySearch: oneCountrySearch,
+                                setOneCountrySearch: setOneCountrySearch,
+                            }}
+                            selections={{
+                                setTopCountrySelection: setTopCountrySelection,
+                                setBottomCountrySelection: setBottomCountrySelection,
+                            }}
+                        />
+                        <MainSearchIndicatorSelection
+                            data={indicators}
+                            selections={{
+                                setIndicatorSelection: setIndicatorSelection,
+                            }}
+                        />
+                        <MainSearchYearSelection
+                            data={years}
+                            decisions={{
+                                yearRangeSearch: yearRangeSearch,
+                                setYearRangeSearch: setYearRangeSearch,
+                            }}
+                            selections={{
+                                setTopYearSelection: setTopYearSelection,
+                                setBottomYearSelection: setBottomYearSelection,
+                            }}
+                        />
+                        <MainSearchButton
+                            decisions={{
+                                oneCountrySearch: oneCountrySearch,
+                                yearRangeSearch: yearRangeSearch,
+                            }}
+                            selections={{
+                                topCountrySelection: topCountrySelection,
+                                bottomCountrySelection: bottomCountrySelection,
+                                indicatorSelection: indicatorSelection,
+                                topYearSelection: topYearSelection,
+                                bottomYearSelection: bottomYearSelection,
+                            }}
+                            setData={{
+                                setGraphData: setGraphData,
+                                setCountry1Data: setCountry1Data,
+                                setCountry2Data: setCountry2Data,
+                            }}
+                            display={{ setDisplayMainSearch: setDisplayMainSearch }}
+                        />
+                    </div>
                 ) : null}
-                {indicators ? (
-                    <MainSearchIndicatorSelection
-                        data={indicators}
-                        selections={{
-                            setIndicatorSelection: setIndicatorSelection,
-                        }}
-                    />
-                ) : null}
-                {years && !countryOnlySearch ? (
-                    <MainSearchYearSelection
-                        data={years}
-                        decisions={{
-                            yearRangeSearch: yearRangeSearch,
-                            setYearRangeSearch: setYearRangeSearch,
-                        }}
-                        selections={{
-                            setTopYearSelection: setTopYearSelection,
-                            setBottomYearSelection: setBottomYearSelection,
-                        }}
-                    />
-                ) : null}
-                <br />
-                <br />
-                <br />
-                <MainSearchButton
-                    decisions={{
-                        countryOnlySearch: countryOnlySearch,
-                        twoCountrySearch: twoCountrySearch,
-                        yearRangeSearch: yearRangeSearch,
-                    }}
-                    selections={{
-                        topCountrySelection: topCountrySelection,
-                        bottomCountrySelection: bottomCountrySelection,
-                        indicatorSelection: indicatorSelection,
-                        topYearSelection: topYearSelection,
-                        bottomYearSelection: bottomYearSelection,
-                    }}
-                    setData={{
-                        setGraphData: setGraphData,
-                        setNumberOfCountriesCompared: setNumberOfCountriesCompared,
-                        setCountry1Data: setCountry1Data,
-                        setCountry2Data: setCountry2Data,
-                    }}
-                    display={{ setDisplayMainSearch: setDisplayMainSearch }}
-                />
             </div>
             <div>
-                {graphData && numberOfCountriesCompared === 1 ? (
+                {graphData && oneCountrySearch ? (
                     <Results data={{ graphData: graphData, setGraphData: setGraphData }} display={{ setDisplayMainSearch: setDisplayMainSearch }} />
                 ) : null}
-                {country1Data && country2Data && numberOfCountriesCompared === 2 ? (
+                {country1Data && country2Data && !oneCountrySearch ? (
                     <ResultsTwoCountries
                         data={{
                             country1Data: country1Data,
@@ -113,9 +102,7 @@ function MainSearch() {
                         }}
                         display={{ setDisplayMainSearch: setDisplayMainSearch }}
                     />
-                ) : (
-                    <h2>yo</h2>
-                )}
+                ) : null}
             </div>
         </div>
     )
