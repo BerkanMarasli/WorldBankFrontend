@@ -13,7 +13,7 @@ function AdminHistory() {
     }, [])
     return (
         <div className="d-flex mx-auto justify-content-center">
-            <Accordion className="mb-5 w-75" defaultActiveKey="0">
+            <Accordion className="mb-5 w-75">
                 <Accordion.Item eventKey="0">
                     <Accordion.Header>Search History</Accordion.Header>
                     <Accordion.Body>
