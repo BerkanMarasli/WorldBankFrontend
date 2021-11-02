@@ -4,6 +4,8 @@ import "./index.css"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
 import "bootstrap/dist/css/bootstrap.min.css"
+const axios = require("axios")
+axios.defaults.withCredentials = true
 
 ReactDOM.render(
     <React.StrictMode>
