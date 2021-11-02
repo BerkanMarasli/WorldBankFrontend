@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+### README
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to World bank indicators, where you can search 5.66 million rows of development indicators data.
 
-## Available Scripts
+Want to know the total Employment in Brazil between 1970 and 1989? Or the % of urban population that have access to non-liquid fuel in Canada between 2010 and 2015? What about the GDP per capita of Mongolia in 1962? Use this website to answer all these questions and more.
 
-In the project directory, you can run:
+Data is available between 1960 and 2017 only. Please note some countries do not have data recorded for every indicator in every year. All data is collected from “World Development Indicators” dataset on Kaggle: https://www.kaggle.com/kaggle/world-development-indicators
 
-### `yarn start`
+### Features:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**Search history.** This displays what other users are searching for (including when the search was made).
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+**Graphs.** If data is available for multiple years, the data will be displayed in a line-graph. _Please note, if data is unavailable for a certain period, then the graph will not include data from that period. For example, suppose you searched for the GDP of Burkina Faso between 1970 and 2010, but there was no data available for the years 1970-90. In this case, the graph will begin from 1991 and not include any years prior to this._
 
-### `yarn test`
+**Create account/login.** To use this website you must first create an account. Users will be logged out of their account after 2 minutes.
+**Logout.** Logs a user out.
+**Range sliders.** Choose your year range by sliding the dots on the sliders.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Features not yet implemented:
 
-### `yarn build`
+**Search history -** “View this search” button - please note that these buttons are for aesthetic purposes only at this time.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**Search history - “user” -** please note that all searches are recorded as being from “admin@admin.com" .
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+**Search history -** “filter by user”. Please note that ALL users will be able to see what ALL OTHER users have searched for. There is no option to only display searches from a specific user.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Technologies used:
 
-### `yarn eject`
+**React bootstrap (NOT regular bootstrap).** This was used to style the buttons, forms and layout of our webpages. https://react-bootstrap.github.io/getting-started/introduction/
+**Formik.** This was used to handle form submission. https://formik.org/
+**Yup.** This was used to handle form validation. https://www.npmjs.com/package/react-yup
+**ReCharts.** Makes the charts to display our data. https://recharts.org/en-US/
+**Express.** Used tor backend magic. https://expressjs.com/
+**Axios.** used to handle HTTP requests and responses. https://axios-http.com/
+**ElephantSQL.** Used to create and host our databases. https://www.elephantsql.com/
+**Yarn.** Package manager used to install the relevant packages above. https://yarnpkg.com/
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Installation guide
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Available soon!
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Endpoints:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+**/signup -** this creates a user account.
+**/login -** this logs users in
+**/distinctcountries -** this returns the distinct country for your search. For example, if countryName=“Argentina”, this would return Argentina’s data for all available indicators.  
+**/history -** this returns the global search history. (i.e. every search from every user).
+**/username/:userid -** this returns the username for the relevant user_id. For example, suppose you wanted to know what user has the user_id of 60. In this case, you would go to /username/60 and this endpoint would return the relevant username (e.g.“Berkan99”).
 
-## Learn More
+### Contributors
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Mo Hazrati - https://github.com/mohhaz64
+Berkan Maraşlı - https://github.com/BerkanMarasli
+Sean Flynn - https://github.com/sf17490
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+We hope you enjoy this service. Any suggestions, requests, contributions or feedback is welcome! Open up a pull request.
