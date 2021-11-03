@@ -5,7 +5,7 @@ function MainSearchIndicatorSelection(props) {
     const indicatorNames = props.data
     const { setIndicatorSelection } = props.selections
     return (
-        <Form.Group className="d-flex flex-column align-items-center w-100" controlId="formBasicSelect">
+        <Form.Group className="d-flex flex-column align-items-center" controlId="formBasicSelect">
             <h3 className="mb-4">Select an Indicator</h3>
             <Form.Control className="text-center" as="select" onChange={(e) => setIndicatorSelection(e.target.value)}>
                 {indicatorNames.map((indicator) => {
