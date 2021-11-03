@@ -22,7 +22,7 @@ function MainSearchCountrySelection(props) {
                     Two Countries
                 </ToggleButton>
             </ToggleButtonGroup>
-            <div className="d-flex justify-content-between w-100">
+            <div className="d-flex justify-content-between">
                 <Form.Control className="mb-4 text-center" as="select" onChange={(e) => setTopCountrySelection(e.target.value)}>
                     {countryNames.map((country) => {
                         return <option value={`${country.countryname}`}>{`${country.countryname}`}</option>
