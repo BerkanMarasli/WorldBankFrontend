@@ -5,6 +5,7 @@ import MainSearchButton from "./MainSearchButton"
 import Results from "./Results"
 import ResultsTwoCountries from "./ResultsTwoCountries"
 import { useState, useEffect } from "react"
+import Spinner from "react-bootstrap/Spinner"
 const axios = require("axios")
 
 function MainSearch() {
@@ -86,7 +87,9 @@ function MainSearch() {
                             display={{ setDisplayMainSearch: setDisplayMainSearch }}
                         />
                     </div>
-                ) : null}
+                ) : (
+                    <Spinner animation="border" variant="primary" />
+                )}
             </div>
             <div>
                 {graphData && oneCountrySearch ? (
