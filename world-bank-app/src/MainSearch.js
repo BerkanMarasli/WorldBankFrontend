@@ -39,6 +39,7 @@ function MainSearch() {
             <div className="ml-auto mr-auto" style={{ display: displayMainSearch }}>
                 {countries && indicators && years ? (
                     <div className="d-inline-flex flex-column w-80 align-items-center">
+                        <Spinner animation="border" variant="primary" />
                         <MainSearchCountrySelection
                             data={countries}
                             decisions={{
